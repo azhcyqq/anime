@@ -1,0 +1,70 @@
+<template>
+    <div class="main-top">
+      <div v-if='searchShow' class="searchBox">
+        <el-input class="inputMsg"
+          placeholder="请输入内容"
+          v-model="nameMsg"
+          clearable>
+        </el-input>
+        <el-button icon="el-icon-search" circle @click="onSearch"></el-button>
+      </div>
+    </div>
+</template>
+<script>
+import Vue from 'vue'
+import pinyin from 'pinyin'
+export default({
+  props:{
+    searchShow:{
+      type:Boolean,
+      default:true
+    }
+  },
+  data(){
+    return{
+      nameMsg:''
+    }
+  },
+  methods: {
+    onSearch(){
+      let name = this.nameMsg;
+      this.$http.get('http://127.0.0.1:9876/getAnime?name='+name).then(res=>{
+        if(!!JSON.parse(res.bodyText)){
+          this.$emit('searchClick',JSON.parse(res.bodyText))
+        }
+        else{
+          let str = [];
+          pinyin(name).forEach(data => {
+            str.push(data[0].charAt(0))
+          });
+          this.$http.get('http://127.0.0.1:9876/getsmallname?regname='+str.join(''))
+        }
+        // console.log(JSON.parse(res.bodyText))
+        // window.localStorage.setItem('msgData',res.bodyText);
+        // window.loaction.href=''
+      })
+    }
+  }
+})
+</script>
+<style>
+  .main-top{
+    width: 100%;
+    height: 100px;
+    background-image: url('~@a/banner19219.jpg');
+    background-repeat: no-repeat;
+    border-bottom:1px solid #000;
+    background-size:100% auto;
+    background-position-y: 50%;
+    position: relative;
+  }
+  .inputMsg{
+    width: 200px;
+  }
+  .searchBox{
+
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+  }
+</style>
