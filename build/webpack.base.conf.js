@@ -27,6 +27,7 @@ module.exports = {
       '@': resolve('src'),
       '@com':resolve('src/components'),
       '@a':resolve('src/assets'),
+      '@i':resolve('../')
     }
   },
   module: {

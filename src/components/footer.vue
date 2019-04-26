@@ -19,7 +19,7 @@ export default {
 <style>
   .foot{
     width: 100%;
-    height: 90px;
+    height: 100px;
     background: #ccc;
     position: fixed;
     bottom: 0;
@@ -28,6 +28,7 @@ export default {
   .foot p{
     padding-top: 20px;
     margin-left: 30px;
+    margin-top: 0;
     text-align: center;
     color:maroon;
   }

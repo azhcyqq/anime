@@ -36,7 +36,7 @@ export default {
     }
   },
   created(){
-    this.$http.get('http://127.0.0.1:9876/gethot?small=0').then(res=>{
+    this.$http.get('http://127.0.0.1:9876/getlunbo?num=6').then(res=>{
       this.animeData = JSON.parse(res.bodyText)
     });
   },

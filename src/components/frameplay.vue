@@ -1,7 +1,7 @@
 <template>
   <div class="framebox">
     <h2>{{playData.name}}</h2>
-    <!-- <iframe class="frameplay" :src="playData.play[playData.playNow-1]" frameborder="0"></iframe> -->
+    <iframe class="frameplay" :src="playData.play[playData.playNow-1]" frameborder="0"></iframe>
     <p @click="fleshPlay(playData.playNow-1,'pre')" :class="{canClick:isPreCanClick}" v-html="preStr"></p>
     <p @click="fleshPlay(playData.playNow+1,'next')" :class="{canClick:isNexCanClick}" v-html="nexStr"></p>
   </div>
@@ -55,7 +55,7 @@ export default {
     width: 80%;
     height: 450px;
     margin: 0 auto;
-    background: #909399;
+    /* background: #909399; */
   }
   .framebox .frameplay{
     width:100%;
