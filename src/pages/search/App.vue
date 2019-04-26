@@ -12,7 +12,8 @@
         </div>
         <searchBox-vue :type="0" @tagFind="findTag"></searchBox-vue>
         <searchBox-vue v-for="(item,index) in searchData" :key="index" :type="1" :searchData="item"></searchBox-vue>
-        <page-vue :showPage="showPage" @currentChange="pageChange" :maxLen="allPages"></page-vue>
+        <page-vue :currentPage="currentPage" :showPage="showPage"
+         @currentChange="pageChange" :maxLen="allPages"></page-vue>
         <!-- <page-vue></page-vue> -->
       </div>
       <footer-vue></footer-vue>
@@ -29,9 +30,13 @@ export default {
         name: 'App',
         nameMsg:'',
         pages:0,
+        pagesPre:0,
         allPages:0,
         searchData:null,
+        searchDataNext:null,
         itemNow:'',
+        firstIn:true,
+        currentPage:1,
       }
     },
     components:{
@@ -43,8 +48,11 @@ export default {
     methods:{
       findTag(item){
         this.itemNow = item;
+        this.pages = 0;
+        this.firstIn = true;
+        this.currentPage = 1;
         this.getAnimeFromTag();
-        this.getAnimePage();
+        // this.getAnimePage();
       },
       onSearch(){
         this.$http.get('http://127.0.0.1:9876/getAnime?name='+this.nameMsg).then(res=>{
@@ -52,11 +60,25 @@ export default {
         })
       },
       getAnimeFromTag(){
-        this.pages = this.pages===0?this.pages:this.pages-1;
-        console.log(this.pages)
-        this.$http.get('http://127.0.0.1:9876/findTag?tag='+this.itemNow+'&skip='+this.pages).then(res=>{
-          this.searchData = JSON.parse(res.bodyText);
-        })
+        console.log(this.currentPage)
+        if(this.pages === 0){
+          if(this.firstIn){
+            this.firstIn=false;
+            this.requestAnime(0);
+            this.requestAnime(1);
+            this.getAnimePage();
+          }else{
+            this.requestAnime(3);
+            this.requestAnime(4);
+          }
+        }else{
+          if(this.pagesPre === 0 && this.pages === 2 || this.pages-this.pagesPre === 1){
+            this.requestAnime(2);
+          }else{
+            this.requestAnime(3);
+            this.requestAnime(4);
+          }
+        }
       },
       getAnimePage(){
         this.$http.get('http://127.0.0.1:9876/getCount?tag='+this.itemNow).then(res=>{
@@ -65,8 +87,69 @@ export default {
         })
       },
       pageChange(page){
+        this.pagesPre = this.pages;
         this.pages = page;
+        this.currentPage = page
         this.getAnimeFromTag();
+      },
+      // @type
+      //      0第一次请求
+      //      1预请求下一页
+      //      2点击下一页
+      //      3点击其他页（上一页，或者跳过下一页跳转）
+      requestAnime(type){
+        let trunPage =-1;
+        if(type===0){
+          trunPage = this.pages;
+        }else if(type===1){
+          trunPage = this.pages + 1;
+        }else if(type===2){
+          trunPage = this.pages;
+          this.searchData = this.searchDataNext;
+        }else if(type===3){
+          trunPage = this.pages-1;
+        }else if(type===4){
+          trunPage = this.pages
+        }
+        this.$http.get('http://127.0.0.1:9876/findTag?tag='+this.itemNow+'&skip='+trunPage).then(res=>{
+          let tempObject = JSON.parse(res.bodyText);
+          let iNum = 0;
+          let _this = this;
+          for(let i=0;i<tempObject.length;i++){
+            (function(){
+              let oImg = new Image();
+              oImg.src = tempObject[i].img;
+              oImg.onload = function(){
+                iNum++;
+                if(iNum === tempObject.length){
+                  if(type===0||type===3){
+                    _this.searchData = tempObject;
+                  }
+                  else{
+                    _this.searchDataNext = tempObject;
+                  }
+                  // _this.searchData = tempObject
+                  // console.log(type,tempObject[tempObject.length-1].name);
+                  // _this.getAnimePage();
+                }
+              }
+              oImg.onerror = function(){
+                iNum++;
+                if(iNum === tempObject.length){
+                  if(type===0||type===3){
+                    _this.searchData = tempObject;
+                  }
+                  else{
+                    _this.searchDataNext = tempObject;
+                  }
+                  // _this.searchData = tempObject
+                  // console.log(type,tempObject[tempObject.length-1].name);
+                  // _this.getAnimePage();
+                }
+              }
+            })(i)
+          }
+        })
       }
     },
     created() {

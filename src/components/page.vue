@@ -2,6 +2,7 @@
   <!-- 页面分页导航栏（最下方） -->
   <div v-if="showPage" class="pageDiv">
     <el-pagination
+      :current-page="currentPage"
       @current-change="currentChange"
       background
       layout="prev, pager, next"
@@ -24,6 +25,10 @@ export default {
     showPage:{
       type:Boolean,
       default:false
+    },
+    currentPage:{
+      type:Number,
+      default:1
     }
   },
   methods: {

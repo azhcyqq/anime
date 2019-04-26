@@ -7,7 +7,7 @@
     <div class="content">
       <div class="nav" v-for="(item,index) in weekSelect" :key="index" v-show="weekNow===index">
         <div v-for="(it,ind) in item" :key="ind">
-          <img :src="it.img" alt=""><span class="itemName">{{it.name}}</span>
+          <img class="canClick" @click="jumpImg(it)" :src="it.img" alt=""><span @click="jumpImg(it)" class="canClick itemName">{{it.name}}</span>
           <span class="allNum">共{{it.play.length}}集</span>
         </div>
       </div>
@@ -20,7 +20,7 @@
     <div class="content2">
       <div class="nav2" v-for="(item,index) in weekSelect" :key="index" v-show="weekNow===index">
         <div v-for="(it,ind) in item" :key="ind">
-          <span class="itemName2">{{it.name}}</span>
+          <span @click="jumpImg(it)" class="itemName2 canClick">{{it.name}}</span>
           <span class="allNum2">共{{it.play.length}}集</span>
         </div>
       </div>
@@ -62,6 +62,9 @@ export default {
         console.log(res)
       })
       // console.log(this)
+    },
+    jumpImg(item){
+      this.$emit('imgGo',item)
     }
   },
   created(){
@@ -168,5 +171,8 @@ export default {
   }
   .nav2 div{
     margin-top: 10px;
+  }
+  .canClick{
+    cursor: pointer;
   }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="box" v-if="type===0">
-        <img :src="boxData.img" alt="">
+        <img @click="imgGo(boxData)" :src="boxData.img" alt="">
         <p class="animeName">{{boxData.name}}</p>
     </div>
   </div>
@@ -18,6 +18,11 @@ export default {
       default:{}
     }
   },
+  methods:{
+    imgGo(boxData){
+      this.$emit('goDetail',boxData)
+    }
+  }
 }
 </script>
 <style>
@@ -31,6 +36,15 @@ export default {
     width: 290px;
     height: 270px;
     cursor: pointer;
+  }
+  .box img:hover+p{
+    transition: 0.5s;
+    background:#0B2744;
+    transform: scale(1.02)
+  }
+  .box img:hover{
+    transition: 0.5s;
+    transform: scale(1.02)
   }
   .animeName{
     font-size: 18px;

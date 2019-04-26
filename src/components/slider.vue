@@ -12,8 +12,8 @@
   <div class="test">
     <div class="block">
       <el-carousel trigger="click" height="300px" type="card" :interval="4000">
-        <el-carousel-item @click="itemClick(item)" v-for="(item,index) in imgData" :key="index">
-          <img class="itemImg canClick" :src="item.img" alt="">
+        <el-carousel-item v-for="(item,index) in imgData" :key="index">
+          <img  @click="itemClick(item)" class="itemImg canClick" :src="item.img" alt="">
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -28,7 +28,8 @@ export default {
   },
   methods:{
     itemClick(item){
-      this.$emit('junpImg',item)
+      console.log(item)
+      this.$emit('jumpImg',item)
     }
   },
   created(){

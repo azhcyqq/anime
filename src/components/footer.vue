@@ -45,7 +45,7 @@ export default {
     line-height: 30px;
   }
   .foot a:hover{
-    transform: scale(1.1);
+    color:maroon;
     transition: 0.2s
   }
 </style>

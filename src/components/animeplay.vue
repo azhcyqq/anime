@@ -1,6 +1,6 @@
 <template>
   <div class="anime-play-list">
-    <p v-for="(item,index) in dataObject.titles" :key="index"><span>{{item}}</span></p>
+    <p v-for="(item,index) in dataObject.titles" :key="index" @click="play(index)"><span>{{item}}</span></p>
   </div>
 </template>
 <script>
@@ -11,7 +11,9 @@ export default {
     }
   },
   methods:{
-
+    play(index){
+      this.$emit('goPlay',this.dataObject,index)
+    }
   },
   props:{
     dataObject:{

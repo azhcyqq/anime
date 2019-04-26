@@ -10,7 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "element-ui": "^2.7.2",
+    "element-ui": "^2.8.2",
     "pinyin": "^2.8.3",
     "ts-loader": "^5.3.3",
     "typescript": "^3.4.4",

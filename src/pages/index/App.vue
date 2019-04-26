@@ -2,11 +2,11 @@
   <div id="app">
     <header-vue @searchClick='search'></header-vue>
 
-    <slider-vue></slider-vue>
-    <uiList-vue :type="0"></uiList-vue>
+    <slider-vue @jumpImg="imgGo"></slider-vue>
+    <uiList-vue @imgGo="imgGo" :type="0"></uiList-vue>
     <div class="content-box">
       <div class="linkBox-box">
-        <linkbox-vue class="linkBox" v-for="(item,index) in animeData" :key="index" :type="0" :boxData="item"></linkbox-vue>
+        <linkbox-vue @goDetail="imgGo" class="linkBox" v-for="(item,index) in animeData" :key="index" :type="0" :boxData="item"></linkbox-vue>
       </div>
     </div>
     <footer-vue></footer-vue>
@@ -36,10 +36,9 @@ export default {
     }
   },
   created(){
-    this.$http.get('http://127.0.0.1:9876/getAnime?num=6').then(res=>{
+    this.$http.get('http://127.0.0.1:9876/gethot?small=0').then(res=>{
       this.animeData = JSON.parse(res.bodyText)
     });
-    console.log(pinyin('我真是'))
   },
   methods:{
     search(searchData){
@@ -47,6 +46,10 @@ export default {
       window.localStorage.setItem('animeSearch',JSON.stringify(searchData))
       // console.log(JSON.parse(window.localStorage.getItem('animeSearch')))
       window.location.href = 'http://127.0.0.1:8080/search.html';
+    },
+    imgGo(data){
+      window.localStorage.setItem('animeDetail',JSON.stringify(data));
+      window.location.href = 'http://127.0.0.1:8080/animeDetail.html'
     }
   }
 }
