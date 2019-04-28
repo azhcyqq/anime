@@ -34,7 +34,7 @@ export default {
     footerVue,
   },
   created(){
-    this.playData = JSON.parse(window.localStorage.getItem('playData'))
+    this.playData = JSON.parse(window.sessionStorage.getItem('playData'))
     if(this.playData.tag === []){
       this.$http.get('http://127.0.0.1:9876/gethot?small=1&page='+Math.round( (Math.random()*10)+10 ) ).then(res=>{
           this.hotSuggest = JSON.parse(res.bodyText)
@@ -51,11 +51,11 @@ export default {
   methods:{
     fleshPlay(playData){
       this.playData = playData;
-      window.localStorage.setItem('playData',JSON.stringify(this.playData))
+      window.sessionStorage.setItem('playData',JSON.stringify(this.playData))
       window.location.reload();
     },
     imgGo(index,ind,hotSuggest){
-      window.localStorage.setItem('animeDetail',JSON.stringify(hotSuggest[index*3+ind]))
+      window.sessionStorage.setItem('animeDetail',JSON.stringify(hotSuggest[index*3+ind]))
       window.location.href='http://127.0.0.1:8080/animeDetail.html'
     }
   }

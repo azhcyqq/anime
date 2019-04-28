@@ -38,7 +38,7 @@ export default {
       this.$emit('tagFind',item)
     },
     jumpDetail(){
-      window.localStorage.setItem('animeDetail',JSON.stringify(this.searchData));
+      window.sessionStorage.setItem('animeDetail',JSON.stringify(this.searchData));
       window.location.href = "http://127.0.0.1:8080/animeDetail.html";
     }
   },

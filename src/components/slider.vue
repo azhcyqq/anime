@@ -43,7 +43,7 @@ export default {
   .itemImg{
     width: 300px;
     height: 350px;
-    margin: 0 10px;
+    /* margin: 0 10px; */
   }
   .block{
     width: 960px;

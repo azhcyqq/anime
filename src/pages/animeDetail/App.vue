@@ -21,7 +21,7 @@
         <animeplay-vue @goPlay="playGo" :dataObject="searchData"></animeplay-vue>
       </div>
       <div class="linkBox-box">
-        <el-carousel height="250px">
+        <el-carousel height="250px" :autoplay="false">
           <el-carousel-item v-for="(item,index) in 3" :key="index" >
             <div>
               <img class="boxImg canClick" @click="imgGo(index,ind,hotSuggest)" v-for="(it,ind) in 5"
@@ -59,7 +59,7 @@ export default {
       linkboxVue,
     },
     created() {
-      this.searchData = JSON.parse(window.localStorage.getItem('animeDetail'));
+      this.searchData = JSON.parse(window.sessionStorage.getItem('animeDetail'));
       this.year = Math.round(Math.random()*10+2000);
       this.$http.get('http://127.0.0.1:9876/gethot?small=1&page='+Math.round( (Math.random()*10)+10 ) ).then(res=>{
         this.hotSuggest = JSON.parse(res.bodyText)
@@ -67,17 +67,17 @@ export default {
     },
     methods: {
       jumpTo(tag){
-        window.localStorage.setItem('findTagAnime',tag)
+        window.sessionStorage.setItem('findTagAnime',tag)
         window.location.href = 'http://127.0.0.1:8080/search.html'
       },
       imgGo(index,ind,hotSuggest){
         // this.searchData = hotSuggest[index*5+ind]
-        window.localStorage.setItem('animeDetail',JSON.stringify(hotSuggest[index*5+ind]))
+        window.sessionStorage.setItem('animeDetail',JSON.stringify(hotSuggest[index*5+ind]))
         window.location.reload();
       },
       playGo(animeData,index){
         animeData.playNow = index+1;
-        window.localStorage.setItem('playData',JSON.stringify(animeData))
+        window.sessionStorage.setItem('playData',JSON.stringify(animeData))
         window.location.href = 'http://127.0.0.1:8080/animeplay.html'
       }
     }

@@ -11,7 +11,8 @@
           <el-button class="searchBtn" icon="el-icon-search" circle @click="onSearch"></el-button>
         </div>
         <searchBox-vue :type="0" @tagFind="findTag"></searchBox-vue>
-        <searchBox-vue v-for="(item,index) in searchData" :key="index" :type="1" :searchData="item"></searchBox-vue>
+        <searchBox-vue v-for="(item,index) in searchData" :key="index" :type="1" :searchData="item" v-show="hasData"></searchBox-vue>
+        <p class="noData" v-show="!hasData">无搜索数据</p>
         <page-vue :currentPage="currentPage" :showPage="showPage"
          @currentChange="pageChange" :maxLen="allPages"></page-vue>
         <!-- <page-vue></page-vue> -->
@@ -37,6 +38,7 @@ export default {
         itemNow:'',
         firstIn:true,
         currentPage:1,
+        hasData:true,
       }
     },
     components:{
@@ -97,6 +99,7 @@ export default {
       //      1预请求下一页
       //      2点击下一页
       //      3点击其他页（上一页，或者跳过下一页跳转）
+      //      4非第一次请求
       requestAnime(type){
         let trunPage =-1;
         if(type===0){
@@ -153,10 +156,10 @@ export default {
       }
     },
     created() {
-      let searchName = window.localStorage.getItem('animeSearch');
-      window.localStorage.removeItem('animeSearch');
-      let searchTag = window.localStorage.getItem('findTagAnime');
-      window.localStorage.removeItem('findTagAnime');
+      let searchName = window.sessionStorage.getItem('animeSearch');
+      window.sessionStorage.removeItem('animeSearch');
+      let searchTag = window.sessionStorage.getItem('findTagAnime');
+      window.sessionStorage.removeItem('findTagAnime');
       if(!!searchName){
         this.searchData = JSON.parse(searchName)
       }
@@ -188,5 +191,8 @@ export default {
     position: absolute;
     left: 100%;
     top: 0%;
+  }
+  .noData{
+    text-align: center;
   }
 </style>

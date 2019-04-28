@@ -37,18 +37,19 @@ export default {
   },
   created(){
     this.$http.get('http://127.0.0.1:9876/getlunbo?num=6').then(res=>{
+      console.log(res)
       this.animeData = JSON.parse(res.bodyText)
     });
   },
   methods:{
     search(searchData){
       console.log(searchData)
-      window.localStorage.setItem('animeSearch',JSON.stringify(searchData))
-      // console.log(JSON.parse(window.localStorage.getItem('animeSearch')))
+      window.sessionStorage.setItem('animeSearch',JSON.stringify(searchData))
+      // console.log(JSON.parse(window.sessionStorage.getItem('animeSearch')))
       window.location.href = 'http://127.0.0.1:8080/search.html';
     },
     imgGo(data){
-      window.localStorage.setItem('animeDetail',JSON.stringify(data));
+      window.sessionStorage.setItem('animeDetail',JSON.stringify(data));
       window.location.href = 'http://127.0.0.1:8080/animeDetail.html'
     }
   }

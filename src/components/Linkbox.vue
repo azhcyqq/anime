@@ -38,13 +38,13 @@ export default {
     cursor: pointer;
   }
   .box img:hover+p{
-    transition: 0.5s;
+    transition: 0.2s;
     background:#0B2744;
-    transform: scale(1.02)
+    transform: scale(1.01)
   }
   .box img:hover{
-    transition: 0.5s;
-    transform: scale(1.02)
+    transition: 0.2s;
+    transform: scale(1.01)
   }
   .animeName{
     font-size: 18px;

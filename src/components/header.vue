@@ -1,5 +1,6 @@
 <template>
     <div class="main-top">
+      <p @click="turnIndex">守❤护❤世❤界❤上❤最❤好❤的❤坤❤坤</p>
       <div v-if='searchShow' class="searchBox">
         <el-input class="inputMsg"
           placeholder="请输入内容"
@@ -37,12 +38,17 @@ export default({
           pinyin(name).forEach(data => {
             str.push(data[0].charAt(0))
           });
-          this.$http.get('http://127.0.0.1:9876/getsmallname?regname='+str.join(''))
+          this.$http.get('http://127.0.0.1:9876/getsmallname?regname='+str.join('')).then(res=>{
+            this.$emit('searchClick',JSON.parse(res.bodyText))
+          })
         }
         // console.log(JSON.parse(res.bodyText))
-        // window.localStorage.setItem('msgData',res.bodyText);
+        // window.sessionStorage.setItem('msgData',res.bodyText);
         // window.loaction.href=''
       })
+    },
+    turnIndex(){
+      window.location.href='http://127.0.0.1:8080'
     }
   }
 })
@@ -66,5 +72,14 @@ export default({
     position: absolute;
     bottom: 20px;
     right: 30px;
+  }
+  .main-top p{
+    position: absolute;
+    bottom: 0;
+    font:bold helvetica,arial,sans-serif;
+    color:#F00;
+    padding:10px;
+    text-shadow:0 0 4px #FFF,0 -5px 4px #ff3,2px -10px 6px #fd3, -2px -15px 11px #f80, 2px -25px 18px #f20;
+    cursor: pointer;
   }
 </style>
