@@ -8,9 +8,13 @@
       <uiList-vue class="week-box2" @imgGo="imgGo" :type="0"></uiList-vue>
     </div>
     <div class="content-box">
+      <p class="content-box-p"><span>热门推荐</span></p>
       <div class="linkBox-box">
         <linkbox-vue @goDetail="imgGo" class="linkBox" v-for="(item,index) in animeData" :key="index" :type="0" :boxData="item"></linkbox-vue>
       </div>
+    </div>
+    <div class="backgroundDiv">
+      <searchBox-vue :position="'middle'" :showRecommend="false" :type="0" @tagFind="findTag"></searchBox-vue>
     </div>
     <div class="line"></div>
     <div class="content-box">
@@ -43,6 +47,7 @@ import uiListVue from '@com/uiList'
 import footerVue from '@com/footer'
 import linkboxVue from '@com/Linkbox'
 import sliderVue from '@com/slider'
+import searchBoxVue from '@com/searchBox'
 import pinyin from 'pinyin'
 export default {
   components:{
@@ -51,6 +56,7 @@ export default {
     footerVue,
     linkboxVue,
     sliderVue,
+    searchBoxVue,
   },
   data(){
     return{
@@ -101,6 +107,10 @@ export default {
       }
       window.sessionStorage.setItem('findTagAnime',tag);
       window.location.href = 'http://127.0.0.1:8080/search.html'
+    },
+    findTag(tag){
+      window.sessionStorage.setItem('findTagAnime',tag);
+      window.location.href = 'http://127.0.0.1:8080/search.html'
     }
   }
 }
@@ -128,16 +138,13 @@ export default {
   margin: 25px 35px;
 }
 .line{
-  /* border: 1px solid #ccc; */
   height: 1px;
-  /* height: 0; */
   background: #ccc;
 }
 .content-box{
   position: relative;
   width: 100%;
   margin: 0 auto 20px;
-  /* background-color:rgba(57, 142, 186, 0.6); */
 }
 .content-box-p{
   text-indent: 35px;
@@ -149,10 +156,14 @@ export default {
   font-size: 16px;
   cursor: pointer;
 }
-.content-box-p:hover{
+.content-box-span:hover{
   color:rgb(233, 95, 92);
 }
-/* .content-box::after{
+.backgroundDiv{
+  background: rgba(57, 142, 186, 0.6);
+  position: relative;
+}
+.backgroundDiv::after{
   content: '';
   display: block;
   width: 100%;
@@ -166,7 +177,7 @@ export default {
   background-size: 100% 100%;
   background-attachment: fixed;
   opacity: 0.5;
-} */
+}
 .weekBox{
   width: 80%;
   margin: 0 auto;

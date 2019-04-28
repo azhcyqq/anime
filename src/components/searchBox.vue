@@ -1,8 +1,8 @@
 <template>
   <!-- 标签导航与搜索结果组件 -->
   <div>
-    <div  class="tag-box" v-if="type===0">
-      <p>推荐</p>
+    <div  :class="['tag-box',position]" v-if="type===0">
+      <p v-if="showRecommend">推荐</p>
       <span class="canClick" @click="tagClick(item)"  v-for="(item,index) in tag" :key="index" v-show="item!=null">
         {{item}}
       </span>
@@ -34,6 +34,14 @@ export default {
     searchData:{
       type:Object,
       default:null
+    },
+    showRecommend:{
+      type:Boolean,
+      default:true
+    },
+    position:{
+      type:String,
+      default:''
     }
   },
   methods:{
@@ -121,5 +129,16 @@ export default {
   .smallTag{
     padding: 0 6px;
     color: #666;
+  }
+  .middle{
+    margin: 20px auto;
+    position: relative;
+    z-index: 999;
+    color: #fff;
+    padding: 30px 0;
+    width: 550px;
+  }
+  .middle span{
+    color: #fff;
   }
 </style>

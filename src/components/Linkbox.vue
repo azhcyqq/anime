@@ -2,8 +2,8 @@
   <!-- 点击盒子组件 -->
   <div>
     <div class="box" v-if="type===0">
-        <img @click="imgGo(boxData)" :src="boxData.img" alt="">
-        <p class="animeName">{{boxData.name}}</p>
+      <img @click="imgGo(boxData)" :src="boxData.img" alt="">
+      <p class="animeName">{{boxData.name}}</p>
     </div>
   </div>
 </template>
@@ -55,6 +55,7 @@ export default {
     top: 100%;
     transform: translateY(-100%);
     color: antiquewhite;
-    background: rgba(0,0,0,0.6)
+    background: rgba(0,0,0,0.6);
+    z-index: -1;
   }
 </style>
