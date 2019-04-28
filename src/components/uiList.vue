@@ -115,6 +115,10 @@ export default {
     line-height: 70px;
     margin-left: 20px
   }
+  .nav .itemName:hover{
+    text-decoration: underline;
+    color: maroon;
+  }
   .nav .allNum{
     display: inline-block;
     height:100%;
@@ -131,7 +135,7 @@ export default {
 
 
   .uiList2{
-    width: 210px;
+    width: 245px;
     overflow: hidden;
   }
   .uiList2 ul{
@@ -139,7 +143,7 @@ export default {
   }
   .uiList2 li{
     float: left;
-    width: 30px;
+    width: 35px;
     text-decoration: none;
     list-style: none;
     text-align: center;
@@ -160,6 +164,11 @@ export default {
   .nav2 .itemName2{
     display: inline-block;
     height:100%;
+    font-size: 0.9rem;
+  }
+  .nav2 .itemName2:hover{
+    text-decoration: underline;
+    color:maroon;
   }
   .nav2 .allNum2{
     display: inline-block;

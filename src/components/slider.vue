@@ -41,21 +41,15 @@ export default {
 </script>
 <style>
   .itemImg{
-    width: 300px;
-    height: 350px;
-    /* margin: 0 10px; */
+    width: 350px;
+    height: 320px;
   }
   .block{
-    width: 960px;
-    height: 350px;
+    width: 700px;
+    height: 320px;
     margin: 20px auto;
   }
   .canClick{
     cursor: pointer;
   }
-
-  /* .test .el-carousel__indicator{
-    width:70px;
-    height:30px;
-  } */
 </style>

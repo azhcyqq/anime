@@ -21,8 +21,8 @@ export default {
   .foot{
     width: 100%;
     height: 100px;
-    background: #ccc;
-    position: fixed;
+    /* background: #ccc; */
+    /* position: fixed; */
     bottom: 0;
     z-index: 999;
   }

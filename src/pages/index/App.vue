@@ -3,11 +3,34 @@
     <header-vue @searchClick='search'></header-vue>
 
     <slider-vue @jumpImg="imgGo"></slider-vue>
-    <uiList-vue @imgGo="imgGo" :type="0"></uiList-vue>
-    <uiList-vue @imgGo="imgGo" :type="1"></uiList-vue>
+    <div class="weekBox">
+      <uiList-vue class="week-box1" @imgGo="imgGo" :type="1"></uiList-vue>
+      <uiList-vue class="week-box2" @imgGo="imgGo" :type="0"></uiList-vue>
+    </div>
     <div class="content-box">
       <div class="linkBox-box">
         <linkbox-vue @goDetail="imgGo" class="linkBox" v-for="(item,index) in animeData" :key="index" :type="0" :boxData="item"></linkbox-vue>
+      </div>
+    </div>
+    <div class="line"></div>
+    <div class="content-box">
+      <p class="content-box-p">冒险๑乛◡乛๑<span class="content-box-span" @click="goToTag(1)">点击查看更多</span></p>
+      <div class="linkBox-box">
+        <linkbox-vue @goDetail="imgGo" class="linkBox" v-for="(item,index) in hotTag1" :key="index" :type="0" :boxData="item"></linkbox-vue>
+      </div>
+    </div>
+    <div class="line"></div>
+    <div class="content-box">
+      <p class="content-box-p">奇幻(*•̀ㅂ•́)و<span class="content-box-span" @click="goToTag(2)">点击查看更多</span></p>
+      <div class="linkBox-box">
+        <linkbox-vue @goDetail="imgGo" class="linkBox" v-for="(item,index) in hotTag2" :key="index" :type="0" :boxData="item"></linkbox-vue>
+      </div>
+    </div>
+    <div class="line"></div>
+    <div class="content-box">
+      <p class="content-box-p">搞笑（●´∀｀）♪<span class="content-box-span" @click="goToTag(3)">点击查看更多</span></p>
+      <div class="linkBox-box">
+        <linkbox-vue @goDetail="imgGo" class="linkBox" v-for="(item,index) in hotTag3" :key="index" :type="0" :boxData="item"></linkbox-vue>
       </div>
     </div>
     <footer-vue></footer-vue>
@@ -34,12 +57,16 @@ export default {
       name: 'App',
       animeData:[],
       imgData:null,
+      hotTag1:null,
+      hotTag2:null,
+      hotTag3:null,
     }
   },
   created(){
-    this.$http.get('http://127.0.0.1:9876/getlunbo?num=6').then(res=>{
+    this.$http.get('http://127.0.0.1:9876/getlunbo?num=10').then(res=>{
       this.animeData = JSON.parse(res.bodyText)
     });
+    this.getHotTag();
   },
   methods:{
     search(searchData){
@@ -49,6 +76,31 @@ export default {
     imgGo(data){
       window.sessionStorage.setItem('animeDetail',JSON.stringify(data));
       window.location.href = 'http://127.0.0.1:8080/animeDetail.html'
+    },
+    getHotTag(){
+      this.$http.get('http://127.0.0.1:9876/gethottag?tag=冒险').then(res=>{
+        this.hotTag1 = JSON.parse(res.bodyText)
+      })
+      this.$http.get('http://127.0.0.1:9876/gethottag?tag=奇幻').then(res=>{
+        this.hotTag2 = JSON.parse(res.bodyText)
+      })
+      this.$http.get('http://127.0.0.1:9876/gethottag?tag=搞笑').then(res=>{
+        this.hotTag3 = JSON.parse(res.bodyText)
+      })
+    },
+    goToTag(type){
+      let tag = '';
+      if(type===1){
+        tag = '冒险'
+      }
+      else if(type===2){
+        tag = '奇幻'
+      }
+      else if(type===3){
+        tag = '搞笑'
+      }
+      window.sessionStorage.setItem('findTagAnime',tag);
+      window.location.href = 'http://127.0.0.1:8080/search.html'
     }
   }
 }
@@ -60,7 +112,7 @@ export default {
   padding: 0;
 }
 .linkBox-box{
-  width: 1050px;
+  width: 1250px;
   height: 100%;
   position: relative;
   z-index: 99;
@@ -73,15 +125,34 @@ export default {
 }
 .linkBox{
   float:left;
-  margin: 30px;
+  margin: 25px 35px;
+}
+.line{
+  /* border: 1px solid #ccc; */
+  height: 1px;
+  /* height: 0; */
+  background: #ccc;
 }
 .content-box{
   position: relative;
   width: 100%;
-  margin: 0 auto 110px;
-  background-color: rgba(64,158,255,0.7)
+  margin: 0 auto 20px;
+  /* background-color:rgba(57, 142, 186, 0.6); */
 }
-.content-box::after{
+.content-box-p{
+  text-indent: 35px;
+  font-size: 25px;
+  margin-top: 5px;
+  cursor: default;
+}
+.content-box-span{
+  font-size: 16px;
+  cursor: pointer;
+}
+.content-box-p:hover{
+  color:rgb(233, 95, 92);
+}
+/* .content-box::after{
   content: '';
   display: block;
   width: 100%;
@@ -95,5 +166,20 @@ export default {
   background-size: 100% 100%;
   background-attachment: fixed;
   opacity: 0.5;
+} */
+.weekBox{
+  width: 80%;
+  margin: 0 auto;
+}
+.weekBox::after{
+  content: '';
+  display: block;
+  clear: both;
+}
+.week-box1{
+  float: left;
+}
+.week-box2{
+  float: right;
 }
 </style>

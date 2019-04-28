@@ -28,18 +28,18 @@ export default {
 </script>
 <style>
   .box{
-    width: 290px;
-    height: 270px;
+    width: 180px;
+    height: 200px;
     position: relative;
   }
   .box img{
     position: absolute;
-    width: 290px;
-    height: 270px;
+    width: 180px;
+    height: 200px;
     cursor: pointer;
   }
   .box img:hover+p{
-    transition: 0.2s;
+    transition: 0.4s;
     background:#0B2744;
     transform: scale(1.01)
   }
@@ -55,6 +55,6 @@ export default {
     top: 100%;
     transform: translateY(-100%);
     color: antiquewhite;
-    background: rgba(0,0,0,0.5)
+    background: rgba(0,0,0,0.6)
   }
 </style>
