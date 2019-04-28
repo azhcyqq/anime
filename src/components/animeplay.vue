@@ -1,4 +1,5 @@
 <template>
+  <!-- 播放集数组件 -->
   <div class="anime-play-list">
     <p v-for="(item,index) in dataObject.titles" :key="index" @click="play(index)"><span>{{item}}</span></p>
   </div>
@@ -22,7 +23,6 @@ export default {
     }
   },
   created(){
-    console.log(this.dataObject)
   }
 }
 </script>

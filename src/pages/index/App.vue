@@ -4,6 +4,7 @@
 
     <slider-vue @jumpImg="imgGo"></slider-vue>
     <uiList-vue @imgGo="imgGo" :type="0"></uiList-vue>
+    <uiList-vue @imgGo="imgGo" :type="1"></uiList-vue>
     <div class="content-box">
       <div class="linkBox-box">
         <linkbox-vue @goDetail="imgGo" class="linkBox" v-for="(item,index) in animeData" :key="index" :type="0" :boxData="item"></linkbox-vue>
@@ -37,15 +38,12 @@ export default {
   },
   created(){
     this.$http.get('http://127.0.0.1:9876/getlunbo?num=6').then(res=>{
-      console.log(res)
       this.animeData = JSON.parse(res.bodyText)
     });
   },
   methods:{
     search(searchData){
-      console.log(searchData)
       window.sessionStorage.setItem('animeSearch',JSON.stringify(searchData))
-      // console.log(JSON.parse(window.sessionStorage.getItem('animeSearch')))
       window.location.href = 'http://127.0.0.1:8080/search.html';
     },
     imgGo(data){

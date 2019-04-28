@@ -1,15 +1,16 @@
 <template>
-    <div class="main-top">
-      <p @click="turnIndex">守❤护❤世❤界❤上❤最❤好❤的❤坤❤坤</p>
-      <div v-if='searchShow' class="searchBox">
-        <el-input class="inputMsg"
-          placeholder="请输入内容"
-          v-model="nameMsg"
-          clearable>
-        </el-input>
-        <el-button icon="el-icon-search" circle @click="onSearch"></el-button>
-      </div>
+  <!-- 头部组件 -->
+  <div class="main-top">
+    <p @click="turnIndex">守❤护❤世❤界❤上❤最❤好❤的❤坤❤坤</p>
+    <div v-if='searchShow' class="searchBox">
+      <el-input class="inputMsg"
+        placeholder="请输入内容"
+        v-model="nameMsg"
+        clearable>
+      </el-input>
+      <el-button icon="el-icon-search" circle @click="onSearch"></el-button>
     </div>
+  </div>
 </template>
 <script>
 import Vue from 'vue'
@@ -42,9 +43,6 @@ export default({
             this.$emit('searchClick',JSON.parse(res.bodyText))
           })
         }
-        // console.log(JSON.parse(res.bodyText))
-        // window.sessionStorage.setItem('msgData',res.bodyText);
-        // window.loaction.href=''
       })
     },
     turnIndex(){

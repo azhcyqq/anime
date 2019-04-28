@@ -40,9 +40,7 @@ export default {
           this.hotSuggest = JSON.parse(res.bodyText)
         })
     }else{
-      console.log(this.playData.tag[0])
       let randomTag = this.playData.tag[parseInt(Math.random()*this.playData.tag.length)]
-      console.log(this.playData.tag.length)
       this.$http.get('http://127.0.0.1:9876/findAlike?tag='+randomTag).then(res=>{
         this.hotSuggest = JSON.parse(res.bodyText)
       })

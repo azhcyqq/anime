@@ -1,4 +1,5 @@
 <template>
+  <!-- 广告图组件 -->
   <div v-if="isAppear">
     <div :class="imgPosition">
       <img class="banner-img" :src="imgSrc" alt="">

@@ -1,4 +1,5 @@
 <template>
+<!-- 每周更新导航组件 -->
 <div>
   <div class="uiList" v-if="type===0">
     <ul>
@@ -52,16 +53,14 @@ export default {
       for(let i=0;i<this.weekList.length;i++){
         this.weekSelect.push([]);
       }
-      this.$http.get('http://127.0.0.1:9876/getAnime').then(res=>{
-        console.log(JSON.parse(res.bodyText))
+      this.$http.get('http://127.0.0.1:9876/getweek').then(res=>{
         let arr = JSON.parse(res.bodyText);
         for(let i=0;i<arr.length;i++){
-          this.weekSelect[i%this.weekList.length].push(arr[i])
+          this.weekSelect[arr[i].date-1].push(arr[i])
         }
-      }).catch(res=>{
-        console.log(res)
+      }).catch(err=>{
+        console.log(err)
       })
-      // console.log(this)
     },
     jumpImg(item){
       this.$emit('imgGo',item)

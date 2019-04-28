@@ -1,4 +1,5 @@
 <template>
+  <!-- 标签导航与搜索结果组件 -->
   <div>
     <div  class="tag-box" v-if="type===0">
       <p>推荐</p>
@@ -24,6 +25,8 @@
 <script>
 export default {
   props:{
+    // type：0标签导航
+    // type：1搜索结果
     type:{
       type:Number,
       default:0

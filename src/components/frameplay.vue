@@ -1,4 +1,5 @@
 <template>
+  <!-- 播放组件 -->
   <div class="framebox">
     <h2>{{playData.name}}</h2>
     <iframe class="frameplay" :src="playData.play[playData.playNow-1]" frameborder="0"></iframe>

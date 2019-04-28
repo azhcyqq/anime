@@ -1,4 +1,5 @@
 <template>
+  <!-- 首页卡片轮播图组件 -->
   <!-- <div v-if="false">
      <div class="block">
       <el-carousel trigger="click" height="300px" type="card" :interval="4000">
@@ -28,7 +29,6 @@ export default {
   },
   methods:{
     itemClick(item){
-      console.log(item)
       this.$emit('jumpImg',item)
     }
   },

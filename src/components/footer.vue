@@ -1,4 +1,5 @@
 <template>
+  <!-- 底部组件 -->
   <div class="foot">
     <p>友情链接</p>
     <div>

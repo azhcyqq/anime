@@ -15,7 +15,6 @@
         <p class="noData" v-show="!hasData">无搜索数据</p>
         <page-vue :currentPage="currentPage" :showPage="showPage"
          @currentChange="pageChange" :maxLen="allPages"></page-vue>
-        <!-- <page-vue></page-vue> -->
       </div>
       <footer-vue></footer-vue>
   </div>
@@ -62,7 +61,6 @@ export default {
         })
       },
       getAnimeFromTag(){
-        console.log(this.currentPage)
         if(this.pages === 0){
           if(this.firstIn){
             this.firstIn=false;
@@ -131,9 +129,6 @@ export default {
                   else{
                     _this.searchDataNext = tempObject;
                   }
-                  // _this.searchData = tempObject
-                  // console.log(type,tempObject[tempObject.length-1].name);
-                  // _this.getAnimePage();
                 }
               }
               oImg.onerror = function(){
@@ -145,9 +140,6 @@ export default {
                   else{
                     _this.searchDataNext = tempObject;
                   }
-                  // _this.searchData = tempObject
-                  // console.log(type,tempObject[tempObject.length-1].name);
-                  // _this.getAnimePage();
                 }
               }
             })(i)

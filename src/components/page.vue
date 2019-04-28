@@ -1,5 +1,5 @@
 <template>
-  <!-- 页面分页导航栏（最下方） -->
+  <!-- 页面分页导航栏组件（最下方） -->
   <div v-if="showPage" class="pageDiv">
     <el-pagination
       :current-page="currentPage"

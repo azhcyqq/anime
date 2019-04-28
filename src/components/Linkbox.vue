@@ -1,4 +1,5 @@
 <template>
+  <!-- 点击盒子组件 -->
   <div>
     <div class="box" v-if="type===0">
         <img @click="imgGo(boxData)" :src="boxData.img" alt="">
