@@ -1,0 +1,6 @@
+{
+  "index":"http://127.0.0.1:8080",
+  "search":"http://127.0.0.1:8080/search.html",
+  "animeDetail":"http://127.0.0.1:8080/animeDetail.html",
+  "animeplay":"http://127.0.0.1:8080/animeplay.html"
+}

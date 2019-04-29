@@ -1,15 +1,5 @@
 <template>
   <!-- 首页卡片轮播图组件 -->
-  <!-- <div v-if="false">
-     <div class="block">
-      <el-carousel trigger="click" height="300px" type="card" :interval="4000">
-        <el-carousel-item @click="itemClick(item)" v-for="(item,index) in imgData" :key="index">
-          <img class="itemImg canClick" :src="item.img" alt="">
-        </el-carousel-item>
-      </el-carousel>
-    </div>
-  </div> -->
-
   <div class="test">
     <div class="block">
       <el-carousel trigger="click" height="300px" type="card" :interval="4000">
@@ -41,11 +31,11 @@ export default {
 </script>
 <style>
   .itemImg{
-    width: 350px;
+    width: 400px;
     height: 320px;
   }
   .block{
-    width: 700px;
+    width: 800px;
     height: 320px;
     margin: 20px auto;
   }

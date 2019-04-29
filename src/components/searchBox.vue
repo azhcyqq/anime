@@ -11,10 +11,10 @@
     <div v-if="type===1 && searchData!==null">
       <div class="anime-box">
         <div>
-          <img @click="jumpDetail" class="anime-img canClick" :src="searchData.img" alt="">
+          <img @click="jumpDetail(searchData)" class="anime-img canClick" :src="searchData.img" alt="">
         </div>
         <div class="anime-introduce">
-          <p>名称：<span class="canUse" @click="jumpDetail">{{searchData.name}}</span></p>
+          <p>名称：<span class="canClick" @click="jumpDetail(searchData)">{{searchData.name}}</span></p>
           <p>标签：<span class="canClick smallTag" @click="tagClick(item)" v-for="(item,index) in searchData.tag" :key="index">{{item}}</span></p>
           <p>简介：<span>{{introduce}}</span></p>
         </div>
@@ -48,9 +48,8 @@ export default {
     tagClick(item){
       this.$emit('tagFind',item)
     },
-    jumpDetail(){
-      window.sessionStorage.setItem('animeDetail',JSON.stringify(this.searchData));
-      window.location.href = "http://127.0.0.1:8080/animeDetail.html";
+    jumpDetail(dataObject){
+      this.$emit('jumpDetail',dataObject)
     }
   },
   data(){

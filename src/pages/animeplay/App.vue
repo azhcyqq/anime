@@ -20,6 +20,7 @@ import bannerVue from '@com/banner'
 import frameplayVue from '@com/frameplay'
 import headerVue from '@com/header'
 import footerVue from '@com/footer'
+import URL from '@mock/url.json'
 export default {
   data() {
     return {
@@ -54,7 +55,7 @@ export default {
     },
     imgGo(index,ind,hotSuggest){
       window.sessionStorage.setItem('animeDetail',JSON.stringify(hotSuggest[index*3+ind]))
-      window.location.href='http://127.0.0.1:8080/animeDetail.html'
+      window.location.href = URL.animeDetail;
     }
   }
 }

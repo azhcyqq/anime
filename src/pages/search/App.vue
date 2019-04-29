@@ -11,10 +11,9 @@
           <el-button class="searchBtn" icon="el-icon-search" circle @click="onSearch"></el-button>
         </div>
         <searchBox-vue :type="0" @tagFind="findTag"></searchBox-vue>
-        <searchBox-vue v-for="(item,index) in searchData" :key="index" :type="1" :searchData="item" v-show="hasData"></searchBox-vue>
-        <p class="noData" v-show="!hasData">无搜索数据</p>
+        <searchBox-vue @jumpDetail="jumpDetail" v-for="(item,index) in searchData" :key="index" :type="1" :searchData="item" v-show="hasData"></searchBox-vue>
         <page-vue :currentPage="currentPage" :showPage="showPage"
-         @currentChange="pageChange" :maxLen="allPages"></page-vue>
+         @currentChange="pageChange" :maxLen="allPages" v-if="hasData"></page-vue>
       </div>
       <footer-vue></footer-vue>
   </div>
@@ -24,6 +23,8 @@ import headerVue from '@com/header'
 import footerVue from '@com/footer'
 import searchBoxVue from '@com/searchBox'
 import pageVue from '@com/page'
+import pinyin from 'pinyin'
+import URL from '@mock/url.json'
 export default {
     data(){
       return{
@@ -37,7 +38,8 @@ export default {
         itemNow:'',
         firstIn:true,
         currentPage:1,
-        hasData:true,
+        hasData:false,
+        once:true,
       }
     },
     components:{
@@ -47,17 +49,40 @@ export default {
       pageVue,
     },
     methods:{
+      open6() {
+        this.once = true;
+        this.$notify.error({
+          title: '错误',
+          message: '（╯#-皿-)╯~~╧═╧ 服务器故障，图片加载失败'
+        });
+      },
+      jumpDetail(dataObject){
+        window.sessionStorage.setItem('animeDetail',JSON.stringify(dataObject));
+        window.location.href = URL.animeDetail;
+      },
       findTag(item){
         this.itemNow = item;
         this.pages = 0;
         this.firstIn = true;
         this.currentPage = 1;
         this.getAnimeFromTag();
-        // this.getAnimePage();
       },
       onSearch(){
         this.$http.get('http://127.0.0.1:9876/getAnime?name='+this.nameMsg).then(res=>{
-          this.searchData = JSON.parse(res.bodyText);
+          if(JSON.parse(res.bodyText).length === 0){
+            let str = [];
+            pinyin(this.nameMsg).forEach(data => {
+              str.push(data[0].charAt(0))
+            });
+            this.$http.get('http://127.0.0.1:9876/getsmallname?regname='+str.join('')).then(res=>{
+              this.searchData = JSON.parse(res.bodyText);
+              this.hasData = true;
+            })
+          }else{
+            this.searchData = JSON.parse(res.bodyText);
+            this.hasData = true;
+            console.log(JSON.parse(res.bodyText))
+          }
         })
       },
       getAnimeFromTag(){
@@ -116,6 +141,27 @@ export default {
           let tempObject = JSON.parse(res.bodyText);
           let iNum = 0;
           let _this = this;
+          setTimeout(()=>{
+            console.log(123123)
+            console.log(iNum)
+            console.log(tempObject.length)
+            if(iNum !== tempObject.length){
+              if(this.once){
+                this.once = false;
+                this.open6();
+              }
+              for(let i=0;i<tempObject.length;i++){
+                tempObject[i].img = '';
+                if(type===0||type===3){
+                  _this.searchData = tempObject;
+                }
+                else{
+                  _this.searchDataNext = tempObject;
+                }
+                this.hasData = true;
+              }
+            }
+          },1000)
           for(let i=0;i<tempObject.length;i++){
             (function(){
               let oImg = new Image();
@@ -129,6 +175,7 @@ export default {
                   else{
                     _this.searchDataNext = tempObject;
                   }
+                  _this.hasData = true;
                 }
               }
               oImg.onerror = function(){
@@ -139,7 +186,8 @@ export default {
                   }
                   else{
                     _this.searchDataNext = tempObject;
-                  }
+
+                  _this.hasData = true;}
                 }
               }
             })(i)

@@ -42,6 +42,7 @@ import searchBoxVue from '@com/searchBox'
 import pageVue from '@com/page'
 import animeplayVue from '@com/animeplay'
 import linkboxVue from '@com/Linkbox'
+import URL from '@mock/url.json'
 export default {
     data(){
       return{
@@ -68,17 +69,16 @@ export default {
     methods: {
       jumpTo(tag){
         window.sessionStorage.setItem('findTagAnime',tag)
-        window.location.href = 'http://127.0.0.1:8080/search.html'
+        window.location.href = URL.search;
       },
       imgGo(index,ind,hotSuggest){
-        // this.searchData = hotSuggest[index*5+ind]
         window.sessionStorage.setItem('animeDetail',JSON.stringify(hotSuggest[index*5+ind]))
         window.location.reload();
       },
       playGo(animeData,index){
         animeData.playNow = index+1;
         window.sessionStorage.setItem('playData',JSON.stringify(animeData))
-        window.location.href = 'http://127.0.0.1:8080/animeplay.html'
+        window.location.href = URL.animeplay
       }
     }
 }
@@ -108,7 +108,7 @@ export default {
   }
   .anime .anime-detail .anime-detail-intro,.anime .anime-detail .anime-detail-img{
     margin-left:30px;
-    float:left;
+    /* float:left; */
     display:inline-block;
   }
 
@@ -124,7 +124,7 @@ export default {
     width:50%;
     height:30px;
     line-height:30px;
-    float:left;
+    /* float:left; */
     margin-top:5px;
   }
   .anime .anime-detail .anime-detail-intro span a{

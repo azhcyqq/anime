@@ -15,6 +15,7 @@
 <script>
 import Vue from 'vue'
 import pinyin from 'pinyin'
+import URL from '@mock/url.json'
 export default({
   props:{
     searchShow:{
@@ -31,7 +32,7 @@ export default({
     onSearch(){
       let name = this.nameMsg;
       this.$http.get('http://127.0.0.1:9876/getAnime?name='+name).then(res=>{
-        if(!!JSON.parse(res.bodyText)){
+        if(JSON.parse(res.bodyText).length !== 0){
           this.$emit('searchClick',JSON.parse(res.bodyText))
         }
         else{
@@ -46,7 +47,7 @@ export default({
       })
     },
     turnIndex(){
-      window.location.href='http://127.0.0.1:8080'
+      window.location.href=URL.index;
     }
   }
 })

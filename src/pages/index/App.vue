@@ -1,11 +1,10 @@
 <template>
   <div id="app">
     <header-vue @searchClick='search'></header-vue>
-
     <slider-vue @jumpImg="imgGo"></slider-vue>
     <div class="weekBox">
-      <uiList-vue class="week-box1" @imgGo="imgGo" :type="1"></uiList-vue>
       <uiList-vue class="week-box2" @imgGo="imgGo" :type="0"></uiList-vue>
+      <uiList-vue class="week-box1" @imgGo="imgGo" :type="1"></uiList-vue>
     </div>
     <div class="content-box">
       <p class="content-box-p"><span>热门推荐</span></p>
@@ -49,6 +48,7 @@ import linkboxVue from '@com/Linkbox'
 import sliderVue from '@com/slider'
 import searchBoxVue from '@com/searchBox'
 import pinyin from 'pinyin'
+import URL from '@mock/url.json'
 export default {
   components:{
     headerVue,
@@ -77,11 +77,11 @@ export default {
   methods:{
     search(searchData){
       window.sessionStorage.setItem('animeSearch',JSON.stringify(searchData))
-      window.location.href = 'http://127.0.0.1:8080/search.html';
+      window.location.href = URL.search;
     },
     imgGo(data){
       window.sessionStorage.setItem('animeDetail',JSON.stringify(data));
-      window.location.href = 'http://127.0.0.1:8080/animeDetail.html'
+      window.location.href = URL.animeDetail;
     },
     getHotTag(){
       this.$http.get('http://127.0.0.1:9876/gethottag?tag=冒险').then(res=>{
@@ -106,11 +106,11 @@ export default {
         tag = '搞笑'
       }
       window.sessionStorage.setItem('findTagAnime',tag);
-      window.location.href = 'http://127.0.0.1:8080/search.html'
+      window.location.href = URL.search
     },
     findTag(tag){
       window.sessionStorage.setItem('findTagAnime',tag);
-      window.location.href = 'http://127.0.0.1:8080/search.html'
+      window.location.href = URL.search
     }
   }
 }
@@ -186,11 +186,5 @@ export default {
   content: '';
   display: block;
   clear: both;
-}
-.week-box1{
-  float: left;
-}
-.week-box2{
-  float: right;
 }
 </style>
