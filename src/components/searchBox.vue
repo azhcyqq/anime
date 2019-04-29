@@ -10,6 +10,7 @@
 
     <div v-if="type===1 && searchData!==null">
       <div class="anime-box">
+        <div class="rankN" v-if="showRank">{{rankNum+1}}</div>
         <div>
           <img @click="jumpDetail(searchData)" class="anime-img canClick" :src="searchData.img" alt="">
         </div>
@@ -42,6 +43,14 @@ export default {
     position:{
       type:String,
       default:''
+    },
+    showRank:{
+      type:Boolean,
+      default:false,
+    },
+    rankNum:{
+      type:Number,
+      default:0
     }
   },
   methods:{
@@ -93,6 +102,7 @@ export default {
   }
   .anime-box{
     margin-top: 20px;
+    position: relative;
   }
   .anime-box .anime-img,.anime-box .anime-introduce{
     float: left;
@@ -139,5 +149,19 @@ export default {
   }
   .middle span{
     color: #fff;
+  }
+  .rankN{
+    position: absolute;
+    font-size: 1.8em;
+    transform: rotate(25deg);
+    color: brown;
+    right: 10px;
+    border: 1px solid #000;
+    padding: 5px;
+    border-radius: 50%;
+    width: 50px;
+    height: 37px;
+    text-align: center;
+    line-height: 37px;
   }
 </style>

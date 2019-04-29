@@ -8,7 +8,7 @@
     <div class="content">
       <div class="nav" v-for="(item,index) in weekSelect" :key="index" v-show="weekNow===index">
         <div v-for="(it,ind) in item" :key="ind">
-          <img class="canClick" @click="jumpImg(it)" :src="it.img" alt=""><span @click="jumpImg(it)" class="canClick itemName">{{it.name}}</span>
+          <img @click="jumpImg(it)" :src="it.img" alt=""><span @click="jumpImg(it)" class="canClick itemName">{{it.name}}</span>
           <span class="allNum">共{{it.play.length}}集</span>
         </div>
       </div>
@@ -55,9 +55,11 @@ export default {
       }
       this.$http.get('http://127.0.0.1:9876/getweek').then(res=>{
         let arr = JSON.parse(res.bodyText);
+        console.log(arr)
         for(let i=0;i<arr.length;i++){
           this.weekSelect[arr[i].date-1].push(arr[i])
         }
+        console.log(this.weekSelect)
       }).catch(err=>{
         console.log(err)
       })

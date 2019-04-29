@@ -7,7 +7,7 @@
       <uiList-vue class="week-box1" @imgGo="imgGo" :type="1"></uiList-vue>
     </div>
     <div class="content-box">
-      <p class="content-box-p"><span>热门推荐</span></p>
+      <p class="content-box-p">热门推荐<span class="content-box-span" @click="goToRank">点击查看排行榜</span></p>
       <div class="linkBox-box">
         <linkbox-vue @goDetail="imgGo" class="linkBox" v-for="(item,index) in animeData" :key="index" :type="0" :boxData="item"></linkbox-vue>
       </div>
@@ -75,6 +75,10 @@ export default {
     this.getHotTag();
   },
   methods:{
+    goToRank(){
+      console.log(URL.rank)
+      window.location.href = URL.rank;
+    },
     search(searchData){
       window.sessionStorage.setItem('animeSearch',JSON.stringify(searchData))
       window.location.href = URL.search;
