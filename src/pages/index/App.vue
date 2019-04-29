@@ -69,24 +69,30 @@ export default {
     }
   },
   created(){
+    //获取轮播图数据并展示
     this.$http.get('http://127.0.0.1:9876/getlunbo?num=10').then(res=>{
       this.animeData = JSON.parse(res.bodyText)
     });
+    //获取热门标签的数据
     this.getHotTag();
   },
   methods:{
+    //跳转至排行榜页面
     goToRank(){
       console.log(URL.rank)
       window.location.href = URL.rank;
     },
+    //点击搜索查询
     search(searchData){
       window.sessionStorage.setItem('animeSearch',JSON.stringify(searchData))
       window.location.href = URL.search;
     },
+    //点击图片或文字跳转至对应详情页面
     imgGo(data){
       window.sessionStorage.setItem('animeDetail',JSON.stringify(data));
       window.location.href = URL.animeDetail;
     },
+    //获取热门标签数据
     getHotTag(){
       this.$http.get('http://127.0.0.1:9876/gethottag?tag=冒险').then(res=>{
         this.hotTag1 = JSON.parse(res.bodyText)
@@ -98,6 +104,7 @@ export default {
         this.hotTag3 = JSON.parse(res.bodyText)
       })
     },
+    //根据标签跳转至搜索页面
     goToTag(type){
       let tag = '';
       if(type===1){
@@ -112,6 +119,7 @@ export default {
       window.sessionStorage.setItem('findTagAnime',tag);
       window.location.href = URL.search
     },
+    //根据标签查询跳转至搜索页面
     findTag(tag){
       window.sessionStorage.setItem('findTagAnime',tag);
       window.location.href = URL.search

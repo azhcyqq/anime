@@ -60,21 +60,27 @@ export default {
       linkboxVue,
     },
     created() {
+      //获取上一页传递的数据；
       this.searchData = JSON.parse(window.sessionStorage.getItem('animeDetail'));
+      //获取年份
       this.year = Math.round(Math.random()*10+2000);
+      //获取热门推荐
       this.$http.get('http://127.0.0.1:9876/gethot?small=1&page='+Math.round( (Math.random()*10)+10 ) ).then(res=>{
         this.hotSuggest = JSON.parse(res.bodyText)
       })
     },
     methods: {
+      //点击标签跳转至搜索页面
       jumpTo(tag){
         window.sessionStorage.setItem('findTagAnime',tag)
         window.location.href = URL.search;
       },
+      //点击推荐跳转至对应详情页面
       imgGo(index,ind,hotSuggest){
         window.sessionStorage.setItem('animeDetail',JSON.stringify(hotSuggest[index*5+ind]))
         window.location.reload();
       },
+      //点击集数跳转至播放页面
       playGo(animeData,index){
         animeData.playNow = index+1;
         window.sessionStorage.setItem('playData',JSON.stringify(animeData))

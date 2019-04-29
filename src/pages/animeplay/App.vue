@@ -35,7 +35,9 @@ export default {
     footerVue,
   },
   created(){
+    //获取上一个页面传递的数据
     this.playData = JSON.parse(window.sessionStorage.getItem('playData'))
+    //推荐相似，根据传递的数据的标签推荐
     if(this.playData.tag === []){
       this.$http.get('http://127.0.0.1:9876/gethot?small=1&page='+Math.round( (Math.random()*10)+10 ) ).then(res=>{
           this.hotSuggest = JSON.parse(res.bodyText)
@@ -48,11 +50,13 @@ export default {
     }
   },
   methods:{
+    //上一话下一话刷新页面
     fleshPlay(playData){
       this.playData = playData;
       window.sessionStorage.setItem('playData',JSON.stringify(this.playData))
       window.location.reload();
     },
+    //推荐相似跳转
     imgGo(index,ind,hotSuggest){
       window.sessionStorage.setItem('animeDetail',JSON.stringify(hotSuggest[index*3+ind]))
       window.location.href = URL.animeDetail;

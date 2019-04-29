@@ -24,10 +24,12 @@ export default {
   },
   methods:{
     init(){
+      //请求排行榜数据
       this.$http.get('http://127.0.0.1:9876/getRank').then(res=>{
         this.rankData = JSON.parse(res.bodyText);
       })
     },
+    //点击事件跳转详情页面
     jumpDetail(dataObject){
       window.sessionStorage.setItem('animeDetail',JSON.stringify(dataObject));
       window.location.href = URL.animeDetail;
