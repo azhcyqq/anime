@@ -31,7 +31,7 @@ export default {
     display:flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    width: 700px;
+    width: 760px;
     margin: 0 auto 20px;
   }
   .anime-play-list p{
@@ -39,16 +39,6 @@ export default {
     position: relative;
     margin-top: 3%;
     cursor: pointer;
-  }
-  .anime-play-list span::after{
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    /* background: rgba(12,34,56, 0.2) */
   }
   .anime-play-list span:hover {
     transition: 0.3s;

@@ -10,7 +10,10 @@
           </el-input>
           <el-button class="searchBtn" icon="el-icon-search" circle @click="onSearch"></el-button>
         </div>
-        <searchBox-vue :type="0" @tagFind="findTag"></searchBox-vue>
+        <div class="searchBox02">
+          <searchBox-vue :type="0" @tagFind="findTag"></searchBox-vue>
+          <searchBox-vue :type="2" @tagFind="findAZ"></searchBox-vue>
+        </div>
         <p v-if="mohuSearch" class="mohuSearch">对不起，找不到您搜索的内容，我猜您是想搜以下内容</p>
         <searchBox-vue @jumpDetail="jumpDetail" v-for="(item,index) in searchData" :key="index"
         :type="1" :searchData="item" v-show="hasData"></searchBox-vue>
@@ -52,6 +55,12 @@ export default {
       pageVue,
     },
     methods:{
+      findAZ(index){
+        let az = String.fromCharCode('a'.charCodeAt()+index);
+        this.$http.get('http://127.0.0.1:9876/getaz?az='+az).then(res=>{
+          this.searchData = JSON.parse(res.bodyText)
+        })
+      },
       onKeyUp(){
         let ev = window.event;
         if(ev.keyCode === 13){
@@ -246,7 +255,15 @@ export default {
       window.sessionStorage.removeItem('animeSearch');
       let searchTag = window.sessionStorage.getItem('findTagAnime');
       window.sessionStorage.removeItem('findTagAnime');
-      //判断是否存在上一个页面传来的数据，若存在，直接显示
+      //判断是否存在上一个页面传来的数据，若存在，直接显示;
+      let searchAZ = window.sessionStorage.getItem('findAZ');
+      window.sessionStorage.removeItem('findAZ');
+      if(!!searchAZ){
+        this.$http.get('http://127.0.0.1:9876/getaz?az='+searchAZ).then(res=>{
+          this.searchData = JSON.parse(res.bodyText);
+          this.hasData = true;
+        });
+      }
       if(!!searchName){
         this.searchData = JSON.parse(searchName)
         this.mohuSearch = window.sessionStorage.getItem('mohuSearch')==='1'?false:true;
@@ -289,5 +306,8 @@ export default {
   .mohuSearch{
     text-align: center;
     color: #F93232;
+  }
+  .searchBox02{
+    display: flex;
   }
 </style>

@@ -12,24 +12,26 @@
         <linkbox-vue @goDetail="imgGo" class="linkBox" v-for="(item,index) in animeData" :key="index" :type="0" :boxData="item"></linkbox-vue>
       </div>
     </div>
-    <div class="backgroundDiv">
+    <div class="backgroundDiv1">
       <searchBox-vue :position="'middle'" :showRecommend="false" :type="0" @tagFind="findTag"></searchBox-vue>
     </div>
     <div class="line"></div>
     <div class="content-box">
-      <p class="content-box-p">冒险๑乛◡乛๑<span class="content-box-span" @click="goToTag(1)">点击查看更多</span></p>
+      <p class="content-box-p">冒险(*•̀ㅂ•́)و<span class="content-box-span" @click="goToTag(1)">点击查看更多</span></p>
       <div class="linkBox-box">
         <linkbox-vue @goDetail="imgGo" class="linkBox" v-for="(item,index) in hotTag1" :key="index" :type="0" :boxData="item"></linkbox-vue>
       </div>
     </div>
     <div class="line"></div>
     <div class="content-box">
-      <p class="content-box-p">奇幻(*•̀ㅂ•́)و<span class="content-box-span" @click="goToTag(2)">点击查看更多</span></p>
+      <p class="content-box-p">奇幻๑乛◡乛๑<span class="content-box-span" @click="goToTag(2)">点击查看更多</span></p>
       <div class="linkBox-box">
         <linkbox-vue @goDetail="imgGo" class="linkBox" v-for="(item,index) in hotTag2" :key="index" :type="0" :boxData="item"></linkbox-vue>
       </div>
     </div>
-    <div class="line"></div>
+    <div class="backgroundDiv2">
+      <searchBox-vue :position="'middle'" :showRecommend="true" :type="2" @tagFind="findAZ"></searchBox-vue>
+    </div>
     <div class="content-box">
       <p class="content-box-p">搞笑（●´∀｀）♪<span class="content-box-span" @click="goToTag(3)">点击查看更多</span></p>
       <div class="linkBox-box">
@@ -126,6 +128,10 @@ export default {
     findTag(tag){
       window.sessionStorage.setItem('findTagAnime',tag);
       window.location.href = URL.search
+    },
+    findAZ(index){
+      window.sessionStorage.setItem('findAZ',String.fromCharCode('a'.charCodeAt()+index));
+      window.location.href = URL.search
     }
   }
 }
@@ -174,11 +180,11 @@ export default {
 .content-box-span:hover{
   color:rgb(233, 95, 92);
 }
-.backgroundDiv{
+.backgroundDiv1{
   background: rgba(57, 142, 186, 0.6);
   position: relative;
 }
-.backgroundDiv::after{
+.backgroundDiv1::after{
   content: '';
   display: block;
   width: 100%;
@@ -189,6 +195,25 @@ export default {
   bottom: 0;
   left: 0;
   background: url('~@a/bg1.jpg');
+  background-size: 100% 100%;
+  background-attachment: fixed;
+  opacity: 0.5;
+}
+.backgroundDiv2{
+  background: rgba(57, 142, 186, 0.6);
+  position: relative;
+}
+.backgroundDiv2::after{
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: url('~@a/bg2.jpeg');
   background-size: 100% 100%;
   background-attachment: fixed;
   opacity: 0.5;

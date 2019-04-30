@@ -17,6 +17,10 @@
           </div>
         </div>
       </div>
+      <div class="anime-title">
+        <span>在线</span>
+        <el-divider></el-divider>
+      </div>
       <div class="anime-play">
         <animeplay-vue @goPlay="playGo" :dataObject="searchData"></animeplay-vue>
       </div>
@@ -96,7 +100,7 @@ export default {
   }
   .anime{
     margin:20px;
-    margin-bottom: 110px;
+    margin-bottom: 50px;
   }
   .anime-detail{
     display: inline-block;
@@ -173,5 +177,22 @@ export default {
   }
   .canClick{
     cursor: pointer;
+  }
+  .anime-title{
+    width: 760px;
+    margin: 20px auto 0
+  }
+  .el-divider--horizontal{
+    margin:  18px 0 0 0;
+  }
+  .anime-title span{
+    display: inline-block;
+    width: 50px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background: #f68;
+    border-radius: 10px 10px 0 0;
+    margin-left: 50px;
   }
 </style>

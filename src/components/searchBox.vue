@@ -2,9 +2,16 @@
   <!-- 标签导航与搜索结果组件 -->
   <div>
     <div  :class="['tag-box',position]" v-if="type===0">
-      <p v-if="showRecommend">推荐</p>
+      <p v-if="showRecommend">按类型</p>
       <span class="canClick" @click="tagClick(item)"  v-for="(item,index) in tag" :key="index" v-show="item!=null">
-        {{item}}
+        <i>{{item}}</i><el-divider direction="vertical"></el-divider>
+      </span>
+    </div>
+
+    <div  :class="['tag-box',position]" v-if="type===2">
+      <p v-if="showRecommend">按字母</p>
+      <span class="canClick" @click="tagClick(index)"  v-for="(item,index) in 26" :key="index" v-show="item!=null">
+        <i>{{String.fromCharCode('a'.charCodeAt()+index)}}</i><el-divider direction="vertical"></el-divider>
       </span>
     </div>
 
@@ -131,6 +138,10 @@ export default {
   .canClick{
     cursor: pointer;
   }
+  .canClick i{
+    text-decoration: none;
+    font-style: normal;
+  }
   .canClick:hover{
     transition: 0.2s;
     color: #c40e26;
@@ -140,7 +151,7 @@ export default {
     color: #666;
   }
   .middle{
-    margin: 20px auto;
+    margin: 30px auto;
     position: relative;
     z-index: 999;
     color: #fff;
