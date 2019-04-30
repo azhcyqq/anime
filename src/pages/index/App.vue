@@ -69,6 +69,8 @@ export default {
     }
   },
   created(){
+    //不清楚是否需要加此功能（滚动条滚动事件）
+    // window.addEventListener('scroll',this.onScrollChange)
     //获取轮播图数据并展示
     this.$http.get('http://127.0.0.1:9876/getlunbo?num=10').then(res=>{
       this.animeData = JSON.parse(res.bodyText)
@@ -84,6 +86,7 @@ export default {
     },
     //点击搜索查询
     search(searchData){
+      console.log(searchData)
       window.sessionStorage.setItem('animeSearch',JSON.stringify(searchData))
       window.location.href = URL.search;
     },

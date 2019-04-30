@@ -11,7 +11,9 @@
           <el-button class="searchBtn" icon="el-icon-search" circle @click="onSearch"></el-button>
         </div>
         <searchBox-vue :type="0" @tagFind="findTag"></searchBox-vue>
-        <searchBox-vue @jumpDetail="jumpDetail" v-for="(item,index) in searchData" :key="index" :type="1" :searchData="item" v-show="hasData"></searchBox-vue>
+        <p v-if="mohuSearch" class="mohuSearch">对不起，找不到您搜索的内容，我猜您是想搜以下内容</p>
+        <searchBox-vue @jumpDetail="jumpDetail" v-for="(item,index) in searchData" :key="index"
+        :type="1" :searchData="item" v-show="hasData"></searchBox-vue>
         <page-vue :currentPage="currentPage" :showPage="showPage"
          @currentChange="pageChange" :maxLen="allPages" v-if="hasData"></page-vue>
       </div>
@@ -40,6 +42,7 @@ export default {
         currentPage:1,
         hasData:false,
         once:true,
+        mohuSearch:false,
       }
     },
     components:{
@@ -49,6 +52,12 @@ export default {
       pageVue,
     },
     methods:{
+      onKeyUp(){
+        let ev = window.event;
+        if(ev.keyCode === 13){
+          this.onSearch();
+        }
+      },
       //图片加载超时提示
       open6() {
         this.once = true;
@@ -76,6 +85,14 @@ export default {
         this.getAnimeFromTag();
       },
       onSearch(){
+        let name = this.nameMsg;
+        if(name.replace(/\s/g,'') === ''){
+          this.showErrorMsg = true;
+          setTimeout(()=>{
+            this.showErrorMsg = false;
+          },1500)
+          return
+        }
         //调用接口查询数据，根据名称查询，若查询结果为空，启用模糊查询，利用拼音转译查询相似拼音的数据
         this.$http.get('http://127.0.0.1:9876/getAnime?name='+this.nameMsg).then(res=>{
           if(JSON.parse(res.bodyText).length === 0){
@@ -84,10 +101,12 @@ export default {
               str.push(data[0].charAt(0))
             });
             this.$http.get('http://127.0.0.1:9876/getsmallname?regname='+str.join('')).then(res=>{
+              this.mohuSearch = true;
               this.searchData = JSON.parse(res.bodyText);
               this.hasData = true;
             })
           }else{
+            this.mohuSearch = false;
             this.searchData = JSON.parse(res.bodyText);
             this.hasData = true;
           }
@@ -152,7 +171,11 @@ export default {
           trunPage = this.pages + 1;
         }else if(type===2){
           trunPage = this.pages;
-          this.searchData = this.searchDataNext;
+          if(this.searchDataNext === null){
+            setTimeout(() => {
+              this.searchData = this.searchDataNext;
+            }, 500);
+          }
         }else if(type===3){
           trunPage = this.pages-1;
         }else if(type===4){
@@ -181,7 +204,7 @@ export default {
                 this.hasData = true;
               }
             }
-          },1000)
+          },5000)
           for(let i=0;i<tempObject.length;i++){
             (function(){
               let oImg = new Image();
@@ -207,7 +230,8 @@ export default {
                   else{
                     _this.searchDataNext = tempObject;
 
-                  _this.hasData = true;}
+                  }
+                  _this.hasData = true;
                 }
               }
             })(i)
@@ -216,6 +240,7 @@ export default {
       }
     },
     created() {
+      window.addEventListener('keyup',this.onKeyUp)
       //获取上一个页面传递的数据，并删除
       let searchName = window.sessionStorage.getItem('animeSearch');
       window.sessionStorage.removeItem('animeSearch');
@@ -224,6 +249,9 @@ export default {
       //判断是否存在上一个页面传来的数据，若存在，直接显示
       if(!!searchName){
         this.searchData = JSON.parse(searchName)
+        this.mohuSearch = window.sessionStorage.getItem('mohuSearch')==='1'?false:true;
+        window.sessionStorage.removeItem('mohuSearch')
+        this.hasData = true;
       }
       if(!!searchTag){
         this.itemNow = searchTag;
@@ -257,5 +285,9 @@ export default {
   }
   .noData{
     text-align: center;
+  }
+  .mohuSearch{
+    text-align: center;
+    color: #F93232;
   }
 </style>
