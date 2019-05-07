@@ -31,12 +31,12 @@ export default {
 </script>
 <style>
   .itemImg{
-    width: 400px;
-    height: 320px;
+    width: 450px;
+    height: 280px;
   }
   .block{
-    width: 800px;
-    height: 320px;
+    width: 900px;
+    height: 280px;
     margin: 20px auto;
   }
   .canClick{

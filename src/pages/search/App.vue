@@ -18,7 +18,7 @@
         <searchBox-vue @jumpDetail="jumpDetail" v-for="(item,index) in searchData" :key="index"
         :type="1" :searchData="item" v-show="hasData"></searchBox-vue>
         <page-vue :currentPage="currentPage" :showPage="showPage"
-         @currentChange="pageChange" :maxLen="allPages" v-if="hasData"></page-vue>
+         @currentChange="pageChange" :maxLen="allPages" v-if="hasData && isAz"></page-vue>
       </div>
       <footer-vue></footer-vue>
   </div>
@@ -46,6 +46,7 @@ export default {
         hasData:false,
         once:true,
         mohuSearch:false,
+        isAz:true,
       }
     },
     components:{
@@ -57,6 +58,7 @@ export default {
     methods:{
       findAZ(index){
         let az = String.fromCharCode('a'.charCodeAt()+index);
+        this.isAz = false;
         this.$http.get('http://127.0.0.1:9876/getaz?az='+az).then(res=>{
           this.searchData = JSON.parse(res.bodyText)
         })
@@ -82,6 +84,7 @@ export default {
       },
       //查询按钮按下事件
       findTag(item){
+        this.isAz = true;
         //设置名称
         this.itemNow = item;
         //重置总页码

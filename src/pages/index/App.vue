@@ -4,7 +4,7 @@
     <slider-vue @jumpImg="imgGo"></slider-vue>
     <div class="weekBox">
       <uiList-vue class="week-box2" @imgGo="imgGo" :type="0"></uiList-vue>
-      <uiList-vue class="week-box1" @imgGo="imgGo" :type="1"></uiList-vue>
+      <!-- <uiList-vue class="week-box1" @imgGo="imgGo" :type="1"></uiList-vue> -->
     </div>
     <div class="content-box">
       <p class="content-box-p">热门推荐<span class="content-box-span" @click="goToRank">点击查看排行榜</span></p>
@@ -184,26 +184,11 @@ export default {
   background: rgba(57, 142, 186, 0.6);
   position: relative;
 }
-.backgroundDiv1::after{
-  content: '';
-  display: block;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: url('~@a/bg1.jpg');
-  background-size: 100% 100%;
-  background-attachment: fixed;
-  opacity: 0.5;
-}
 .backgroundDiv2{
   background: rgba(57, 142, 186, 0.6);
   position: relative;
 }
-.backgroundDiv2::after{
+.backgroundDiv2::after,.backgroundDiv1::after{
   content: '';
   display: block;
   width: 100%;
@@ -213,10 +198,17 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
+  opacity: 0.5;
+}
+.backgroundDiv2::after{
   background: url('~@a/bg2.jpeg');
   background-size: 100% 100%;
   background-attachment: fixed;
-  opacity: 0.5;
+}
+.backgroundDiv1::after{
+  background: url('~@a/bg1.jpg');
+  background-size: 100% 100%;
+  background-attachment: fixed;
 }
 .weekBox{
   width: 80%;
