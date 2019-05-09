@@ -31,13 +31,13 @@ export default {
 </script>
 <style>
   .itemImg{
-    width: 450px;
-    height: 280px;
+    width: 300px;
+    height: 320px;
   }
   .block{
-    width: 900px;
-    height: 280px;
-    margin: 20px auto;
+    width: 600px;
+    height: 320px;
+    margin: 20px auto 50px;
   }
   .canClick{
     cursor: pointer;

@@ -116,11 +116,13 @@ export default {
               this.mohuSearch = true;
               this.searchData = JSON.parse(res.bodyText);
               this.hasData = true;
+              this.isAz = false;
             })
           }else{
             this.mohuSearch = false;
             this.searchData = JSON.parse(res.bodyText);
             this.hasData = true;
+            this.isAz = false;
           }
         })
       },
@@ -217,13 +219,13 @@ export default {
               }
             }
           },5000)
-          for(let i=0;i<tempObject.length;i++){
+          for(let i=0;i<tempObject.length/2;i++){
             (function(){
               let oImg = new Image();
               oImg.src = tempObject[i].img;
               oImg.onload = function(){
                 iNum++;
-                if(iNum === tempObject.length){
+                if(iNum === tempObject.length/2){
                   if(type===0||type===3){
                     _this.searchData = tempObject;
                   }
@@ -235,7 +237,7 @@ export default {
               }
               oImg.onerror = function(){
                 iNum++;
-                if(iNum === tempObject.length){
+                if(iNum === tempObject.length/2){
                   if(type===0||type===3){
                     _this.searchData = tempObject;
                   }

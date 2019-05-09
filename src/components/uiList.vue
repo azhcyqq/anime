@@ -75,15 +75,16 @@ export default {
 </script>
 <style>
   .uiList{
-    width: 560px;
+    width: 700px;
     overflow: hidden;
+    margin: 0 auto;
   }
   .uiList ul{
     position: relative;
   }
   .uiList li{
     float: left;
-    width: 80px;
+    width: 100px;
     height:30px;
     text-decoration: none;
     list-style: none;

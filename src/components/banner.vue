@@ -33,28 +33,31 @@ export default {
 </script>
 <style>
   .banner-left{
-    position: absolute;
-    width: 10%;
+    position: fixed;
+    width: 200px;
     height: 300px;
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
+    z-index: 999;
   }
   .banner-right{
-    position: absolute;
+    position: fixed;
     width: 200px;
     height: 300px;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
+    z-index: 999;
   }
   .banner-middle{
-    position: absolute;
+    position: fixed;
     width: 200px;
     height: 300px;
     left: 50%;
     top:50%;
-    transform: translate(-50%,-50%)
+    transform: translate(-50%,-50%);
+    z-index: 999;
   }
   .banner-img{
     width: 200px;

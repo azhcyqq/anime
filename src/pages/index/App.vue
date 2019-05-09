@@ -38,6 +38,8 @@
         <linkbox-vue @goDetail="imgGo" class="linkBox" v-for="(item,index) in hotTag3" :key="index" :type="0" :boxData="item"></linkbox-vue>
       </div>
     </div>
+    <banner-vue :imgPosition="'banner-left'" :imgSrc="jingdong" ></banner-vue>
+    <banner-vue :imgPosition="'banner-right'" :imgSrc="tianmao"></banner-vue>
     <footer-vue></footer-vue>
   </div>
 </template>
@@ -51,6 +53,7 @@ import sliderVue from '@com/slider'
 import searchBoxVue from '@com/searchBox'
 import pinyin from 'pinyin'
 import URL from '@mock/url.json'
+import bannerVue from '@com/banner'
 export default {
   components:{
     headerVue,
@@ -59,6 +62,7 @@ export default {
     linkboxVue,
     sliderVue,
     searchBoxVue,
+    bannerVue,
   },
   data(){
     return{
@@ -68,6 +72,8 @@ export default {
       hotTag1:null,
       hotTag2:null,
       hotTag3:null,
+      tianmao:'',
+      jingdong:'',
     }
   },
   created(){
@@ -79,6 +85,8 @@ export default {
     });
     //获取热门标签的数据
     this.getHotTag();
+    this.tianmao = require('@a/tianmao.jpg');
+    this.jingdong = require("@a/jingdong.jpg");
   },
   methods:{
     //跳转至排行榜页面

@@ -1,8 +1,8 @@
 <template>
   <div>
     <header-vue :searchShow="false"></header-vue>
-    <banner-vue :imgPosition="'banner-left'"></banner-vue>
-    <banner-vue :imgPosition="'banner-right'"></banner-vue>
+    <banner-vue :imgPosition="'banner-left'" :imgSrc="require('@a/jingdong.jpg')"></banner-vue>
+    <banner-vue :imgPosition="'banner-right'" :imgSrc="require('@a/tianmao.jpg')"></banner-vue>
     <frameplay-vue @fleshPlay="fleshPlay" :playData="playData"></frameplay-vue>
     <div class="linkBox-box">
       <el-carousel height="250px">
