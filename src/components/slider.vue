@@ -35,7 +35,7 @@ export default {
     height: 320px;
   }
   .block{
-    width: 600px;
+    width: 800px;
     height: 320px;
     margin: 20px auto 50px;
   }

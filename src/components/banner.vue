@@ -2,7 +2,7 @@
   <!-- 广告图组件 -->
   <div v-if="isAppear">
     <div :class="imgPosition">
-      <img class="banner-img" :src="imgSrc" alt="">
+      <img class="banner-img" @click="goBanner" :src="imgSrc" alt="">
       <i @click="hideBanner" class="el-icon-error"></i>
     </div>
   </div>
@@ -26,6 +26,14 @@ export default {
   },
   methods:{
     hideBanner(){
+      this.isAppear = false;
+    },
+    goBanner(){
+      if(this.imgSrc.indexOf('tianmao')>-1){
+        window.open('https://www.tmall.com')
+      }else{
+        window.open('https://www.jd.com')
+      }
       this.isAppear = false;
     }
   }
@@ -62,11 +70,13 @@ export default {
   .banner-img{
     width: 200px;
     height: 300px;
+    cursor: pointer;
   }
   .el-icon-error::before{
     position: absolute;
     right: 0;
     top: 0;
     color: red;
+    cursor: pointer;
   }
 </style>

@@ -38,7 +38,7 @@
         <linkbox-vue @goDetail="imgGo" class="linkBox" v-for="(item,index) in hotTag3" :key="index" :type="0" :boxData="item"></linkbox-vue>
       </div>
     </div>
-    <banner-vue :imgPosition="'banner-left'" :imgSrc="jingdong" ></banner-vue>
+    <banner-vue :imgPosition="'banner-left'" :imgSrc="jingdong"></banner-vue>
     <banner-vue :imgPosition="'banner-right'" :imgSrc="tianmao"></banner-vue>
     <footer-vue></footer-vue>
   </div>
