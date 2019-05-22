@@ -8,7 +8,7 @@
     <div class="content">
       <div class="nav" v-for="(item,index) in weekSelect" :key="index" v-show="weekNow===index">
         <div v-for="(it,ind) in item" :key="ind">
-          <img @click="jumpImg(it)" :src="it.img" alt=""><span @click="jumpImg(it)" class="canClick itemName">{{it.name}}</span>
+          <img @click="jumpImg(it)" :src="it.img" alt="" class="canClick"><span @click="jumpImg(it)" class="canClick itemName">{{it.name}}</span>
           <span class="allNum">共{{it.play.length}}集</span>
         </div>
       </div>

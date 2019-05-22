@@ -91,7 +91,6 @@ export default {
   methods:{
     //跳转至排行榜页面
     goToRank(){
-      console.log(URL.rank)
       window.location.href = URL.rank;
     },
     //点击搜索查询

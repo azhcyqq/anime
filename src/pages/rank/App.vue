@@ -1,6 +1,7 @@
 <template>
   <div>
     <header-vue :searchShow="false"></header-vue>
+    <div class="inline"></div>
     <searchBox-vue :showRank="true" v-for="(item,index) in rankData" :key="index"
     :rankNum="index" :type="1" :searchData="item" @jumpDetail="jumpDetail"></searchBox-vue>
     <footer-vue></footer-vue>
@@ -41,5 +42,7 @@ export default {
 }
 </script>
 <style>
-
+  .inline{
+    margin-top: 170px;
+  }
 </style>

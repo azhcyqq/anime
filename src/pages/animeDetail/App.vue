@@ -19,6 +19,7 @@
       </div>
       <div class="anime-title">
         <span>在线</span>
+        <span class="collection" @click="collect">{{collection}}</span>
         <el-divider></el-divider>
       </div>
       <div class="anime-play">
@@ -53,6 +54,9 @@ export default {
         searchData:null,
         year:0,
         hotSuggest:null,
+        collection:'',
+        userMsg:null,
+        login:false,
       }
     },
     components: {
@@ -66,6 +70,13 @@ export default {
     created() {
       //获取上一页传递的数据；
       this.searchData = JSON.parse(window.sessionStorage.getItem('animeDetail'));
+      this.login = window.sessionStorage.getItem('hasLogin')?true:false;
+      this.userMsg = window.sessionStorage.getItem('user')?JSON.parse(window.sessionStorage.getItem('user'))[0]:null;
+      if(this.login && this.userMsg.collections.includes(this.searchData.unitID)){
+        this.collection = "已收藏"
+      }else{
+        this.collection = "收藏"
+      }
       //获取年份
       this.year = Math.round(Math.random()*10+2000);
       //获取热门推荐
@@ -74,6 +85,19 @@ export default {
       })
     },
     methods: {
+      collect(){
+        if(this.userMsg.collections.includes(this.searchData.unitID)){
+          this.userMsg.collections.splice(this.userMsg.collections.indexOf(this.searchData.unitID),1)
+          this.collection = "收藏"
+        }else{
+          this.userMsg.collections.push(this.searchData.unitID)
+          this.collection = "已收藏"
+        }
+        console.log(this.userMsg)
+        this.$http.post('http://127.0.0.1:9876/update',this.userMsg).then(res=>{
+          window.sessionStorage.setItem('user','['+JSON.stringify(this.userMsg)+']')
+        })
+      },
       //点击标签跳转至搜索页面
       jumpTo(tag){
         window.sessionStorage.setItem('findTagAnime',tag)
@@ -101,6 +125,7 @@ export default {
   .anime{
     margin:20px;
     margin-bottom: 50px;
+    margin-top: 170px;
   }
   .anime-detail{
     display: inline-block;
@@ -194,5 +219,9 @@ export default {
     background: #f68;
     border-radius: 10px 10px 0 0;
     margin-left: 50px;
+  }
+  .anime-title .collection{
+    background: #fff;
+    cursor: pointer;
   }
 </style>

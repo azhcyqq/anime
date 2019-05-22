@@ -42,4 +42,7 @@ export default {
   .canClick{
     cursor: pointer;
   }
+  .test{
+    margin-top: 170px;
+  }
 </style>

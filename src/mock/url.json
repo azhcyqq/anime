@@ -3,5 +3,7 @@
   "search":"http://127.0.0.1:8080/search.html",
   "animeDetail":"http://127.0.0.1:8080/animeDetail.html",
   "animeplay":"http://127.0.0.1:8080/animeplay.html",
-  "rank":"http://127.0.0.1:8080/rank.html"
+  "rank":"http://127.0.0.1:8080/rank.html",
+  "user":"http://127.0.0.1:8080/user.html",
+  "logreg":"http://127.0.0.1:8080/login.html"
 }

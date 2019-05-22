@@ -5,6 +5,7 @@ import App from './App'
 import VueResource from 'vue-resource'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+
 Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(ElementUI)

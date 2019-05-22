@@ -33,6 +33,8 @@ export default {
     return{
       isPreCanClick:true,
       isNexCanClick:true,
+      userMsg:null,
+      login:false,
     }
   },
   props:{
@@ -48,6 +50,19 @@ export default {
         this.$emit('fleshPlay',this.playData)
       }
     }
+  },
+  created(){
+    this.login = window.sessionStorage.getItem('hasLogin')?true:false;
+    this.userMsg = window.sessionStorage.getItem('user')?JSON.parse(window.sessionStorage.getItem('user'))[0]:null;
+    if(this.login && this.userMsg.seebefore.includes(this.playData.titles[this.playData.playNow-1])){}
+    else{
+      console.log(this.playData)
+      this.userMsg.seebefore.unshift(this.playData.titles[this.playData.playNow-1])
+    }
+    console.log(this.userMsg)
+    this.$http.post('http://127.0.0.1:9876/update',this.userMsg).then(res=>{
+      window.sessionStorage.setItem('user','['+JSON.stringify(this.userMsg)+']')
+    })
   }
 }
 </script>
@@ -55,7 +70,7 @@ export default {
   .framebox{
     width: 80%;
     height: 450px;
-    margin: 0 auto;
+    margin: 170px auto 0;
     /* background: #909399; */
   }
   .framebox .frameplay{

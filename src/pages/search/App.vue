@@ -293,7 +293,7 @@ export default {
 </script>
 <style>
   .search-result{
-    margin: 20px 0 110px 150px;
+    margin: 170px 0 110px 150px;
   }
   .search-result .search{
     width: 50%;
