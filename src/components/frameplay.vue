@@ -56,10 +56,8 @@ export default {
     this.userMsg = window.sessionStorage.getItem('user')?JSON.parse(window.sessionStorage.getItem('user'))[0]:null;
     if(this.login && this.userMsg.seebefore.includes(this.playData.titles[this.playData.playNow-1])){}
     else{
-      console.log(this.playData)
       this.userMsg.seebefore.unshift(this.playData.titles[this.playData.playNow-1])
     }
-    console.log(this.userMsg)
     this.$http.post('http://127.0.0.1:9876/update',this.userMsg).then(res=>{
       window.sessionStorage.setItem('user','['+JSON.stringify(this.userMsg)+']')
     })

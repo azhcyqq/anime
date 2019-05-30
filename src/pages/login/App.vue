@@ -105,7 +105,7 @@
         this.$http.post('http://127.0.0.1:9876/regiest',{
           username:this.username,
           password:this.aesEncrypt(this.pwd1),
-          phone:this.phone,
+          phone:this.phoneNum,
           favority:this.checkboxGroup1,
         }).then(res=>{
           let msg = JSON.parse(res.bodyText)

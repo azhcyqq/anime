@@ -25,6 +25,24 @@
       <div class="anime-play">
         <animeplay-vue @goPlay="playGo" :dataObject="searchData"></animeplay-vue>
       </div>
+      <el-divider></el-divider>
+      <h2 style="text-align:center">评论区</h2>
+      <div class="comment">
+        <textarea v-model="comment_content" placeholder="请尽管吐槽" cols="30" rows="10"></textarea>
+        <input @click="addComment" type="button" value="发布评论">
+        <el-divider></el-divider>
+        <div v-if="comment.length>=1" class="comment_content">
+          <div v-for="(item,index) in comment" :key="index">
+            <p class="commenter">{{item.commenter}}</p>
+            <p class="content">{{item.content}}</p>
+            <p class="time">{{item.time}}</p>
+            <el-divider></el-divider>
+          </div>
+        </div>
+        <div v-if="comment.length === 0">
+          <p style="text-align:center;color:rgb(153, 162, 170);font-size:18px;">无人，快抢沙发</p>
+        </div>
+      </div>
       <div class="linkBox-box">
         <el-carousel height="250px" :autoplay="false">
           <el-carousel-item v-for="(item,index) in 3" :key="index" >
@@ -57,6 +75,8 @@ export default {
         collection:'',
         userMsg:null,
         login:false,
+        comment:[],
+        comment_content:''
       }
     },
     components: {
@@ -70,6 +90,8 @@ export default {
     created() {
       //获取上一页传递的数据；
       this.searchData = JSON.parse(window.sessionStorage.getItem('animeDetail'));
+      this.comment = this.searchData.comment;
+      console.log(this.comment)
       this.login = window.sessionStorage.getItem('hasLogin')?true:false;
       this.userMsg = window.sessionStorage.getItem('user')?JSON.parse(window.sessionStorage.getItem('user'))[0]:null;
       if(this.login && this.userMsg.collections.includes(this.searchData.unitID)){
@@ -85,6 +107,34 @@ export default {
       })
     },
     methods: {
+      addComment(){
+        if(this.login && this.comment_content!=''){
+          let date = new Date();
+          let year = date.getFullYear();
+          let day = date.getDate();
+          let month = date.getMonth()+1;
+          let hours = date.getHours()<10?'0'+date.getHours():date.getHours();
+          let min = date.getMinutes()<10?'0'+date.getMinutes():date.getMinutes();
+          let second = date.getSeconds()<10?'0'+date.getSeconds():date.getSeconds();
+          let comment_time = ''+year+'-'+month+'-'+day+' '+hours+':'+min+':'+second
+          let json = {
+            commenter:this.userMsg.username,
+            content:this.comment_content,
+            time:comment_time
+          }
+          this.searchData.comment.unshift(JSON.parse(JSON.stringify(json)))
+          this.$http.post('http://127.0.0.1:9876/addComment',this.searchData).then(res=>{
+            this.$message.success('发布评论成功')
+            this.comment = this.searchData.comment;
+            window.sessionStorage.setItem('animeDetail',JSON.stringify(this.searchData))
+          })
+        }else if(!this.login){
+          this.$message.error('请登录后进行评论')
+        }
+        else if(this.comment_content === ''){
+          this.$message.error('请输入内容')
+        }
+      },
       collect(){
         if(this.userMsg.collections.includes(this.searchData.unitID)){
           this.userMsg.collections.splice(this.userMsg.collections.indexOf(this.searchData.unitID),1)
@@ -223,5 +273,46 @@ export default {
   .anime-title .collection{
     background: #fff;
     cursor: pointer;
+  }
+  .comment{
+    width: 760px;
+    margin: 10px auto;
+    border: 1px solid #000;
+    position: relative;
+    padding-top: 30px;
+  }
+  .comment::after{
+    display: block;
+    content: '';
+    clear: both;
+  }
+  .comment textarea{
+    width: 100%;
+    height: 70px;
+    resize: none;
+  }
+  .comment input{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+  }
+  .comment_content{
+    margin-bottom: 20px;
+  }
+  .comment_content .commenter{
+    color: #6d757a;
+    font-size: 12px;
+  }
+  .comment_content .commenter:hover{
+    color: #00a1d6;
+  }
+  .comment_content .content{
+    text-indent: 20px;
+    font-size: 14px;
+    color: #000;
+  }
+  .comment_content .time{
+    color:rgb(153, 162, 170);
+    font-size: 12px;
   }
 </style>

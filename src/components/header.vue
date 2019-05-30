@@ -2,7 +2,7 @@
   <!-- 头部组件 -->
   <div class="main-top" ref="top">
     <div class="userInfo">
-      <img src="@a/user.png" @mouseenter="enter" @mouseleave="leave" alt="" class="canClick">
+      <!-- <img src="@a/user.png" @mouseenter="enter" @mouseleave="leave" alt="" class="canClick">
       <div style="margin-top: 20px; height: 200px;z-index:9999;position:relative"   @mouseenter="detailEnter" @mouseleave="detailLeave">
         <el-collapse-transition>
           <div v-show="show3">
@@ -16,6 +16,50 @@
             </div>
           </div>
         </el-collapse-transition>
+      </div> -->
+      <div>
+        <ul>
+          <li @click="turnIndex">首页</li>
+          <li @mouseenter="showfenlei = true" @mouseleave="showfenlei = false">分类
+            <ul v-show="showfenlei" class="li_ul">
+              <li @click="goSearch(index)" v-for="(item,index) in hotTag" :key="index">{{item}}</li>
+            </ul>
+          </li>
+          <li  @mouseenter="showtuijian = true" @mouseleave="showtuijian = false">番剧推荐
+            <ul class="li_ul li_tuijian">
+              <li @click="goDetail(index)" v-show="showtuijian" v-for="(item,index) in tuijian" :key="index">{{item.name}}</li>
+            </ul>
+            <ul class="li_ul li_tuijian">
+              <li v-if="login" class="flash" v-show="showtuijian" @click="upDatatuijian" >点击刷新</li>
+              <li v-if="!login" class="noCollections" v-show="showtuijian">请先登录</li>
+            </ul>
+          </li>
+          <li  @mouseenter="showcollection = true" @mouseleave="showcollection = false">用户收藏
+            <ul v-if="collections.length == 0" class="li_ul">
+              <li v-if="login" class="noCollections" v-show="showcollection">无收藏动漫</li>
+              <li v-if="!login" class="noCollections" v-show="showcollection">请先登录</li>
+            </ul>
+            <ul v-if="collections.length>=1" class="li_ul li_tuijian">
+              <li @click="goCollections(index)" v-show="showcollection" v-for="(item,index) in collections" :key="index">{{item.name}}</li>
+            </ul>
+          </li>
+          <li  @mouseenter="showhistory = true" @mouseleave="showhistory = false">观看记录
+            <ul v-if="history.length >=1" class="li_ul li_tuijian">
+              <li v-show="showhistory" v-for="(item,index) in history" :key="index">{{item}}</li>
+            </ul>
+            <ul v-if="history.length === 0" class="li_ul">
+              <li v-if="login" class="noCollections" v-show="showhistory">无观看记录</li>
+              <li v-if="!login" class="noCollections" v-show="showhistory">请先登录</li>
+            </ul>
+          </li>
+          <li @click="goUser"  @mouseenter="showuser = true" @mouseleave="showuser = false">个人中心
+            <ul class="li_ul">
+              <li v-show="showuser" v-if="!login" @click="turnLog('0')">登录</li>
+              <li v-show="showuser" v-if="!login" @click="turnLog('1')">注册</li>
+              <li v-show="showuser" v-if="login" @click="zhuxiao">注销</li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </div>
     <p @click="turnIndex">守❤护❤世❤界❤上❤最❤好❤的❤坤❤坤</p>
@@ -47,7 +91,7 @@ export default({
     window.addEventListener('keyup',this.onKeyUp)
     window.addEventListener('scroll',()=>{
       if(window.scrollY>5){
-        this.$refs.top.style.height = '100px';
+        this.$refs.top.style.height = '50px';
       }else{
         this.$refs.top.style.height = '150px';
       }
@@ -55,7 +99,23 @@ export default({
     this.login = window.sessionStorage.getItem('hasLogin')?true:false;
     this.userMsg = window.sessionStorage.getItem('user')?JSON.parse(window.sessionStorage.getItem('user'))[0]:null;
     // window.sessionStorage.removeItem('hasLogin')
-    console.log(this.userMsg)
+    if(this.login){
+      this.history = this.userMsg.seebefore;
+      this.$http.post('http://127.0.0.1:9876/getAnimeById',{
+        id:this.userMsg.collections
+      }).then(res=>{
+        this.collections = JSON.parse(res.bodyText)
+        console.log(this.collections.length)
+      })
+      this.$http.post('http://127.0.0.1:9876/gettuijian',this.userMsg).then(res=>{
+        // console.log(res)
+        this.tuijian = JSON.parse(res.bodyText)
+      })
+    }else{
+      this.history = [];
+      this.collections = [];
+      this.tuijian = [];
+    }
   },
   data(){
     return{
@@ -65,9 +125,51 @@ export default({
       detail:false,
       userMsg:null,
       login:false,
+      showfenlei:false,
+      showcollection:false,
+      showhistory:false,
+      showtuijian:false,
+      showuser:false,
+      tuijian:[],
+      collections:[],
+      history:[],
+      hotTag:['热血','青春','冒险','恐怖','搞笑','恋爱']
     }
   },
   methods: {
+    goCollections(index){
+      let data = this.collections[index]
+      window.sessionStorage.setItem('animeDetail',JSON.stringify(data));
+      window.location.href = URL.animeDetail;
+    },
+    goDetail(index){
+      let data = this.tuijian[index]
+      window.sessionStorage.setItem('animeDetail',JSON.stringify(data));
+      window.location.href = URL.animeDetail;
+    },
+    goSearch(index){
+      let tag = this.hotTag[index];
+      window.sessionStorage.setItem('findTagAnime',tag);
+      window.location.href = URL.search
+    },
+    zhuxiao(){
+      this.login = false;
+      window.sessionStorage.removeItem('user');
+      window.sessionStorage.removeItem('hasLogin')
+      // window.location.reload
+    },
+    goUser(){
+      if(this.login){
+        window.location.href = URL.user;
+      }
+    },
+    upDatatuijian(){
+      this.$http.post('http://127.0.0.1:9876/gettuijian',this.userMsg).then(res=>{
+        // console.log(res)
+        this.tuijian = JSON.parse(res.bodyText)
+        console.log(JSON.parse(res.bodyText))
+      })
+    },
     turnLog(index){
       if(index==='0'){
         window.sessionStorage.setItem('logreg','0')
@@ -184,7 +286,7 @@ export default({
   .searchBox{
 
     position: absolute;
-    bottom: 20px;
+    bottom: 10px;
     right: 30px;
   }
   .main-top p{
@@ -218,19 +320,62 @@ export default({
     padding: 2px;
     width: 100%;
     height: 30px;
-    left: 50%;
+    left: 35%;
+    bottom: 5px;
   }
-  .userInfo img{
-    width: 32px;
-    height: 32px;
+  .userInfo ul{
+    padding: 0;
+  }
+  .userInfo li{
+    float: left;
+    list-style: none;
+    width: 80px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    border-radius:10px;
+    cursor: pointer;
+    color: #000;
+  }
+  .userInfo .li_ul li{
+    width: 80px;
+    height: 20px;
+    border-radius: 0;
     background: #fff;
-    border-radius: 50%;
-    transition: 0.2s;
+    padding: 5px 0;
+  }
+  .userInfo .li_tuijian li{
+    width: 250px;
+    padding: 5px 0;
+  }
+  .userInfo li:hover{
+    background: #409EFF
+  }
+  .userInfo .li_ul::after{
+    clear:both;
+    display: block;
+    content:'';
+  }
+  .userInfo .li_tuijian{
+    background: #fff;
+    width: 250px;
+    border-radius: 5px;
+    padding:0;
   }
   .userInfo img:hover{
     transform: translateY(8px)
   }
   .canClick{
     cursor: pointer;
+  }
+  .userInfo .noCollections{
+    cursor: text
+  }
+  .userInfo .noCollections:hover{
+    background: #fff
+  }
+
+  .userInfo .li_tuijian .flash{
+    color: red
   }
 </style>
